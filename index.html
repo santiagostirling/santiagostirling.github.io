@@ -89,50 +89,63 @@
         </p>
         <div class="row">
           <div class="col-8 col-12-small">
-            <form method="post" action="#">
+            <form id="contact-form" novalidate>
               <div class="row gtr-uniform gtr-50">
-                <div class="col-6 col-12-xsmall"><input type="text" name="name" id="name" placeholder="Name" /></div>
-                <div class="col-6 col-12-xsmall"><input type="email" name="email" id="email" placeholder="Email" /></div>
-                <div class="col-12"><textarea name="message" id="message" placeholder="Message" rows="4"></textarea></div>
+                <div class="col-6 col-12-xsmall">
+                  <input type="text" name="name" id="name" placeholder="Name" required />
+                </div>
+                <div class="col-6 col-12-xsmall">
+                  <input type="email" name="email" id="email" placeholder="Email" required />
+                </div>
+                <div class="col-12">
+                  <textarea name="message" id="message" placeholder="Message" rows="4" required></textarea>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-12">
+                  <div style="display:flex;align-items:center;gap:12px;">
+                    <button type="submit" id="contact-submit" class="primary">Send Message</button>
+                    <div id="contact-spinner" aria-hidden="true" style="display:none; width:20px; height:20px;"></div>
+                    <div id="contact-feedback" role="status" style="margin-left:8px;"></div>
+                  </div>
+                </div>
               </div>
             </form>
-            <ul class="actions">
-              <li><input type="submit" value="Send Message" class="primary" /></li>
-</ul>
-</div>
-<div class="col-4 col-12-small">
-  <ul class="labeled-icons">
-    <li>
-      <h3 class="icon solid fa-home"><span class="label">Location</span></h3>
-      Montevideo, Uruguay
-    </li>
-    <li>
-      <h3 class="icon solid fa-envelope"><span class="label">Email</span></h3>
-      <a href="mailto:22santistirling@gmail.com">22santistirling@gmail.com</a>
-    </li>
-    <li>
-      <h3 class="icon brands fa-linkedin"><span class="label">LinkedIn</span></h3>
-      <a href="https://www.linkedin.com/in/santiago-stirling-878bb5154/" target="_blank">
-        linkedin.com/in/santiagostirling
-      </a>
-    </li>
-    <li>
-      <h3 class="icon solid fa-file-pdf"><span class="label">CV</span></h3>
-      <a href="./assets/docs/Santiago_Stirling_CV.pdf" target="_blank" download="Santiago_Stirling_CV.pdf">
-        Download My CV
-      </a>
-    </li>
-    <li>
-      <h3 class="icon brands fa-github"><span class="label">GitHub</span></h3>
-      <a href="https://github.com/santiagostirling" target="_blank">
-        github.com/santiagostirling
-      </a>
-    </li>
-  </ul>
-</div>
-</div>
-</section>
-</div>
+          </div>
+          <div class="col-4 col-12-small">
+            <ul class="labeled-icons">
+              <li>
+                <h3 class="icon solid fa-home"><span class="label">Location</span></h3>
+                Montevideo, Uruguay
+              </li>
+              <li>
+                <h3 class="icon solid fa-envelope"><span class="label">Email</span></h3>
+                <a href="mailto:22santistirling@gmail.com">22santistirling@gmail.com</a>
+              </li>
+              <li>
+                <h3 class="icon brands fa-linkedin"><span class="label">LinkedIn</span></h3>
+                <a href="https://www.linkedin.com/in/santiago-stirling-878bb5154/" target="_blank">
+                  linkedin.com/in/santiagostirling
+                </a>
+              </li>
+              <li>
+                <h3 class="icon solid fa-file-pdf"><span class="label">CV</span></h3>
+                <a href="./assets/docs/Santiago_Stirling_CV.pdf" target="_blank" download="Santiago_Stirling_CV.pdf">
+                  Download My CV
+                </a>
+              </li>
+              <li>
+                <h3 class="icon brands fa-github"><span class="label">GitHub</span></h3>
+                <a href="https://github.com/santiagostirling" target="_blank">
+                  github.com/santiagostirling
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </div>
 
     <!-- Footer -->
     <footer id="footer">
@@ -160,6 +173,88 @@
     <script src="assets/js/breakpoints.min.js"></script>
     <script src="assets/js/util.js"></script>
     <script src="assets/js/main.js"></script>
+
+    <style>
+      /* Spinner y mensajes mínimos */
+      #contact-spinner{border:2px solid rgba(0,0,0,0.1);border-left-color:#222;border-radius:50%;width:18px;height:18px;animation:spin .8s linear infinite;display:none}
+      @keyframes spin{to{transform:rotate(360deg)}}
+      #contact-feedback{font-size:.95rem;margin-left:8px}
+      #contact-feedback.success{color:#1a7f37}
+      #contact-feedback.error{color:#a12d2d}
+    </style>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('contact-form');
+        if (!form) return;
+        const spinner = document.getElementById('contact-spinner');
+        const feedback = document.getElementById('contact-feedback');
+        const submitBtn = document.getElementById('contact-submit');
+
+        // Si tienes un endpoint real ponlo aquí (Formspree o tu API). Si queda vacío usa mailto.
+        const ENDPOINT = '';
+
+        function setLoading(on) {
+          spinner.style.display = on ? 'inline-block' : 'none';
+          submitBtn.disabled = on;
+        }
+        function showMessage(msg, isError) {
+          feedback.textContent = msg;
+          feedback.className = isError ? 'error' : 'success';
+        }
+
+        form.addEventListener('submit', async function (e) {
+          e.preventDefault(); // evita recarga / ?name=... en la url
+          showMessage('', false);
+
+          const name = (form.name.value || '').trim();
+          const email = (form.email.value || '').trim();
+          const message = (form.message.value || '').trim();
+
+          if (!name || !email || !message) {
+            showMessage('Completa todos los campos.', true);
+            return;
+          }
+          if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            showMessage('Email inválido.', true);
+            return;
+          }
+
+          setLoading(true);
+          if (ENDPOINT) {
+            try {
+              const fd = new FormData();
+              fd.append('name', name);
+              fd.append('email', email);
+              fd.append('message', message);
+
+              const res = await fetch(ENDPOINT, { method: 'POST', body: fd });
+              if (res.ok) {
+                showMessage('Mensaje enviado. Gracias.', false);
+                form.reset();
+              } else {
+                let txt = 'Error enviando el mensaje.';
+                try { const j = await res.json(); if (j && (j.error || j.message)) txt = j.error || j.message; } catch (_) {}
+                showMessage(txt, true);
+                console.error('Send failed', res);
+              }
+            } catch (err) {
+              console.error(err);
+              showMessage('Error de red. Revisa la consola.', true);
+            } finally {
+              setLoading(false);
+            }
+          } else {
+            // fallback: abrir cliente de correo (no envía automáticamente)
+            setLoading(false);
+            const subject = encodeURIComponent('Contacto: ' + name);
+            const body = encodeURIComponent(message + '\n\n' + name + '\n' + email);
+            window.location.href = `mailto:22santistirling@gmail.com?subject=${subject}&body=${body}`;
+            showMessage('Abriendo tu cliente de correo...', false);
+          }
+        });
+      });
+    </script>
 
   </body>
 </html>
