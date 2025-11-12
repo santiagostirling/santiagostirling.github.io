@@ -5,14 +5,14 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
-    <link rel="icon" type="image/png" href="images/avatar.jpg" />
+    <link rel="icon" type="image/png" href="images/foto_cv.png" />
   </head>
   <body class="is-preload">
 
     <!-- Header -->
     <header id="header">
       <div class="inner">
-        <a href="#" class="image avatar"><img src="images/avatar.jpg" alt="Santiago Stirling" /></a>
+        <a href="#" class="image avatar"><img src="images/foto_cv.png" alt="Santiago Stirling" /></a>
         <h1>
           <strong>I'm Santiago Stirling</strong><br />
           Data & Analytics Consultant<br />
@@ -58,9 +58,11 @@
         </header>
         <div class="row">
           <article class="col-6 col-12-xsmall work-item">
-            <a href="images/fulls/powerbi.jpg" class="image fit thumb"><img src="images/thumbs/powerbi.jpg" alt="" /></a>
-            <h3>Power BI CRM Dashboard</h3>
-            <p>Weekly pipeline tracking integrating SQL, CRM Dynamics, and Power BI Service for automatic updates.</p>
+            <a href="images/fulls/powerbi.png" class="image fit thumb">
+              <img src="images/thumbs/powerbi.png" alt="Power BI CRM Dashboard" style="max-width:160px;height:auto;display:block;margin:0 auto;" />
+            </a>
+             <h3>Power BI CRM Dashboard</h3>
+             <p>Weekly pipeline tracking integrating SQL, CRM Dynamics, and Power BI Service for automatic updates.</p>
           </article>
           <article class="col-6 col-12-xsmall work-item">
             <a href="images/fulls/sql.jpg" class="image fit thumb"><img src="images/thumbs/sql.jpg" alt="" /></a>
@@ -175,24 +177,71 @@
     <script src="assets/js/main.js"></script>
 
     <style>
-      /* Spinner y mensajes mínimos */
-      #contact-spinner{border:2px solid rgba(0,0,0,0.1);border-left-color:#222;border-radius:50%;width:18px;height:18px;animation:spin .8s linear infinite;display:none}
-      @keyframes spin{to{transform:rotate(360deg)}}
-      #contact-feedback{font-size:.95rem;margin-left:8px}
-      #contact-feedback.success{color:#1a7f37}
-      #contact-feedback.error{color:#a12d2d}
+      /* Spinner */
+      #contact-spinner {
+        border: 2px solid rgba(0,0,0,0.08);
+        border-left-color: #fff;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        box-shadow: 0 0 0 2px rgba(0,0,0,0.04) inset;
+        animation: spin .8s linear infinite;
+        display: none;
+      }
+      @keyframes spin { to { transform: rotate(360deg); } }
 
-      /* feedback descarga CV */
+      /* inline feedback (visually hidden but available to screen readers) */
+      #contact-feedback { position: absolute; left:-9999px; width:1px; height:1px; overflow:hidden; }
+
+      /* Floating toast */
+      .contact-toast {
+        position: fixed;
+        right: 20px;
+        bottom: 24px;
+        min-width: 260px;
+        max-width: calc(100% - 48px);
+        padding: 12px 14px;
+        color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 8px 24px rgba(20,20,20,0.18);
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        transform: translateY(18px);
+        opacity: 0;
+        transition: transform .25s cubic-bezier(.2,.9,.2,1), opacity .25s;
+        z-index: 1400;
+        font-size: 0.95rem;
+      }
+      .contact-toast.show { transform: translateY(0); opacity: 1; }
+      .contact-toast.success { background: linear-gradient(90deg,#1fa65a,#0f8a45); }
+      .contact-toast.error { background: linear-gradient(90deg,#d64545,#a12d2d); }
+      .contact-toast .msg { flex:1; }
+      .contact-toast .close {
+        background: transparent;
+        border: none;
+        color: rgba(255,255,255,0.95);
+        font-weight: 700;
+        cursor: pointer;
+        padding: 6px;
+        border-radius: 6px;
+      }
+      .contact-toast .icon {
+        width: 20px; height: 20px; flex: 0 0 20px;
+        opacity: 0.95;
+      }
+
+      /* feedback descarga CV (mantener) */
       #cv-feedback {
         position: fixed;
         right: 16px;
-        bottom: 16px;
+        bottom: 64px;
         display: none;
         padding: 8px 12px;
         border-radius: 6px;
         color: #fff;
         font-size: 0.95rem;
-        z-index: 1200;
+        z-index: 1300;
       }
     </style>
 
