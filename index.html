@@ -9,7 +9,6 @@
   </head>
   <body class="is-preload">
 
-    <!-- Header -->
     <header id="header">
       <div class="inner">
         <a href="#" class="image avatar"><img src="images/foto_cv.png" alt="Santiago Stirling" /></a>
@@ -21,23 +20,20 @@
       </div>
     </header>
 
-    <!-- Main -->
     <div id="main">
 
-      <!-- About -->
       <section id="one">
         <header class="major">
           <h2>About Me</h2>
         </header>
         <p>
           I'm a Certified Public Accountant with + 5 years of experience in data analysis, financial modeling, and business intelligence. 
-          I specialize in integrating and transforming complex data sources to deliver powerful insights through <strong>Power BI</strong>, <strong>SQL</strong>, and <strong>Python</strong>.  
+          I specialize in integrating and transforming complex data sources to deliver powerful insights through <strong>Power BI</strong>, <strong>SQL</strong>, and <strong>Python</strong>. 	
           <br><br>
           Passionate about automation, data storytelling, and helping companies make better, data-driven decisions.
         </p>
       </section>
 
-      <!-- Skills -->
       <section id="skills">
         <header class="major">
           <h2>Technical Skills</h2>
@@ -51,29 +47,36 @@
         </ul>
       </section>
 
-      <!-- Projects -->
       <section id="two">
         <header class="major">
           <h2>Recent Work</h2>
         </header>
         <div class="row">
-          <article class="col-6 col-12-xsmall work-item">
-            <a href="images/fulls/powerbi.png" class="image fit thumb">
-              <img src="images/thumbs/powerbi.png" alt="Power BI CRM Dashboard" style="max-width:160px;height:auto;display:block;margin:0 auto;" />
+          
+          <article class="col-6 col-12-xsmall work-item" style="text-align: center;">
+            <a href="https://app.powerbi.com/view?r=eyJrIjoiYjZjNTA1MzctYTcwYi00OGE3LTllZTItMTdlMjU2MGY5MTgzIiwidCI6ImRjNGFjZGIwLTI5YzEtNDBjNC1iMWE1LTg5YjM0MDdjMWI1ZiIsImMiOjR9" 
+               target="_blank" 
+               rel="noopener noreferrer" 
+               style="display: inline-block; max-width: 160px; border-bottom: none;">
+                
+              <img src="images/thumbs/powerbi.png" alt="Power BI CRM Dashboard" style="display: block; width: 100%; height: auto; margin: 0 auto;" />
             </a>
-             <h3>Power BI CRM Dashboard</h3>
-             <p>Weekly pipeline tracking integrating SQL, CRM Dynamics, and Power BI Service for automatic updates.</p>
+            <h3>Power BI CRM Dashboard</h3>
+            <p>Weekly pipeline tracking integrating SQL, CRM Dynamics, and Power BI Service for automatic updates.</p>
           </article>
+          
           <article class="col-6 col-12-xsmall work-item">
             <a href="images/fulls/sql.jpg" class="image fit thumb"><img src="images/thumbs/sql.jpg" alt="" /></a>
             <h3>SQL Automation</h3>
             <p>Automated data extraction and transformation from multiple databases with scheduled jobs in Python.</p>
           </article>
+          
           <article class="col-6 col-12-xsmall work-item">
             <a href="images/fulls/python.jpg" class="image fit thumb"><img src="images/thumbs/python.jpg" alt="" /></a>
             <h3>Forecasting with Prophet</h3>
             <p>Predictive modeling of weekly open opportunities with seasonality adjustments for December and January.</p>
           </article>
+          
           <article class="col-6 col-12-xsmall work-item">
             <a href="images/fulls/sharepoint.jpg" class="image fit thumb"><img src="images/thumbs/sharepoint.jpg" alt="" /></a>
             <h3>SharePoint + Power BI Integration</h3>
@@ -82,7 +85,6 @@
         </div>
       </section>
 
-      <!-- Contact -->
       <section id="three">
         <h2>Get in Touch</h2>
         <p>
@@ -149,15 +151,14 @@
       </section>
     </div>
 
-    <!-- Footer -->
     <footer id="footer">
       <div class="inner">
         <ul class="icons">
-                  <li>
-        <a href="./assets/docs/Santiago_Stirling_CV.pdf" data-cv data-filename="Santiago_Stirling_CV.pdf" class="icon solid fa-file-pdf" target="_blank" rel="noopener noreferrer">
-          <span class="label">Download CV</span>
-        </a>
-      </li>
+          <li>
+            <a href="./assets/docs/Santiago_Stirling_CV.pdf" data-cv data-filename="Santiago_Stirling_CV.pdf" class="icon solid fa-file-pdf" target="_blank" rel="noopener noreferrer">
+              <span class="label">Download CV</span>
+            </a>
+          </li>
           <li><a href="https://www.linkedin.com/in/santiago-stirling-878bb5154/" class="icon brands fa-linkedin" target="_blank"><span class="label">LinkedIn</span></a></li>
           <li><a href="https://github.com/santiagostirling" class="icon brands fa-github" target="_blank"><span class="label">GitHub</span></a></li>
           <li><a href="mailto:22santistirling@gmail.com" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
@@ -168,7 +169,6 @@
       </div>
     </footer>
 
-    <!-- Scripts -->
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/jquery.poptrox.min.js"></script>
     <script src="assets/js/browser.min.js"></script>
@@ -247,103 +247,126 @@
 
     <script>
       document.addEventListener('DOMContentLoaded', function () {
+        // ===== TOAST HELPER =====
+        let hideToast = function() {};
+        (function createToast() {
+          const t = document.createElement('div');
+          t.id = 'contact-toast';
+          t.className = 'contact-toast';
+          t.innerHTML = '<div class="icon" aria-hidden="true">🔔</div><div class="msg"></div><button class="close" aria-label="Cerrar">×</button>';
+          document.body.appendChild(t);
+          t._msg = t.querySelector('.msg');
+          t._btn = t.querySelector('.close');
+          let _timeout = null;
+          
+          hideToast = function() {
+            t.classList.remove('show');
+          };
+          
+          t._btn.addEventListener('click', hideToast);
+          window.showToast = function (text, isError, timeout = 4000) {
+            t.classList.remove('success', 'error');
+            t.classList.add(isError ? 'error' : 'success', 'show');
+            t._msg.textContent = text;
+            clearTimeout(_timeout);
+            _timeout = setTimeout(hideToast, timeout);
+          };
+        })();
+
+        // ===== CONTACT FORM =====
         const form = document.getElementById('contact-form');
-        if (!form) return;
-        const spinner = document.getElementById('contact-spinner');
-        const feedback = document.getElementById('contact-feedback');
-        const submitBtn = document.getElementById('contact-submit');
+        if (form) {
+          const spinner = document.getElementById('contact-spinner');
+          const feedback = document.getElementById('contact-feedback');
+          const submitBtn = document.getElementById('contact-submit');
+          const ENDPOINT = '';
 
-        // Si tienes un endpoint real ponlo aquí (Formspree o tu API). Si queda vacío usa mailto.
-        const ENDPOINT = '';
-
-        function setLoading(on) {
-          spinner.style.display = on ? 'inline-block' : 'none';
-          submitBtn.disabled = on;
-        }
-        function showMessage(msg, isError) {
-          feedback.textContent = msg;
-          feedback.className = isError ? 'error' : 'success';
-        }
-
-        form.addEventListener('submit', async function (e) {
-          e.preventDefault(); // evita recarga / ?name=... en la url
-          showMessage('', false);
-
-          const name = (form.name.value || '').trim();
-          const email = (form.email.value || '').trim();
-          const message = (form.message.value || '').trim();
-
-          if (!name || !email || !message) {
-            showMessage('Completa todos los campos.', true);
-            return;
-          }
-          if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-            showMessage('Email inválido.', true);
-            return;
+          function setLoading(on) {
+            spinner.style.display = on ? 'inline-block' : 'none';
+            submitBtn.disabled = on;
           }
 
-          setLoading(true);
-          if (ENDPOINT) {
-            try {
-              const fd = new FormData();
-              fd.append('name', name);
-              fd.append('email', email);
-              fd.append('message', message);
+          function showMessage(msg, isError) {
+            feedback.textContent = msg;
+            feedback.className = isError ? 'error' : 'success';
+            if (window.showToast) window.showToast(msg, isError);
+          }
 
-              const res = await fetch(ENDPOINT, { method: 'POST', body: fd });
-              if (res.ok) {
-                showMessage('Mensaje enviado. Gracias.', false);
-                form.reset();
-              } else {
-                let txt = 'Error enviando el mensaje.';
-                try { const j = await res.json(); if (j && (j.error || j.message)) txt = j.error || j.message; } catch (_) {}
-                showMessage(txt, true);
-                console.error('Send failed', res);
-              }
-            } catch (err) {
-              console.error(err);
-              showMessage('Error de red. Revisa la consola.', true);
-            } finally {
-              setLoading(false);
+          form.addEventListener('submit', async function (e) {
+            e.preventDefault();
+            showMessage('', false);
+
+            const name = (form.name.value || '').trim();
+            const email = (form.email.value || '').trim();
+            const message = (form.message.value || '').trim();
+
+            if (!name || !email || !message) {
+              showMessage('Completa todos los campos.', true);
+              return;
             }
-          } else {
-            // fallback: abrir cliente de correo (no envía automáticamente)
-            setLoading(false);
-            const subject = encodeURIComponent('Contacto: ' + name);
-            const body = encodeURIComponent(message + '\n\n' + name + '\n' + email);
-            window.location.href = `mailto:22santistirling@gmail.com?subject=${subject}&body=${body}`;
-            showMessage('Abriendo tu cliente de correo...', false);
-          }
-        });
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+              showMessage('Email inválido.', true);
+              return;
+            }
 
-        const links = document.querySelectorAll('[data-cv]');
-        if (!links.length) return;
+            setLoading(true);
+            if (ENDPOINT) {
+              try {
+                const fd = new FormData();
+                fd.append('name', name);
+                fd.append('email', email);
+                fd.append('message', message);
 
-        const fb = document.createElement('div');
-        fb.id = 'cv-feedback';
-        document.body.appendChild(fb);
-        function show(msg, isError) {
-          fb.textContent = msg;
-          fb.style.background = isError ? '#a12d2d' : '#1a7f37';
-          fb.style.display = 'block';
-          clearTimeout(fb._t);
-          fb._t = setTimeout(() => (fb.style.display = 'none'), 3500);
+                const res = await fetch(ENDPOINT, { method: 'POST', body: fd });
+                if (res.ok) {
+                  showMessage('Mensaje enviado. Gracias.', false);
+                  form.reset();
+                } else {
+                  let txt = 'Error enviando el mensaje.';
+                  try { const j = await res.json(); if (j && (j.error || j.message)) txt = j.error || j.message; } catch (_) {}
+                  showMessage(txt, true);
+                }
+              } catch (err) {
+                console.error(err);
+                showMessage('Error de red. Revisa la consola.', true);
+              } finally {
+                setLoading(false);
+              }
+            } else {
+              setLoading(false);
+              const subject = encodeURIComponent('Contacto: ' + name);
+              const body = encodeURIComponent(message + '\n\n' + name + '\n' + email);
+              window.location.href = `mailto:22santistirling@gmail.com?subject=${subject}&body=${body}`;
+              showMessage('Abriendo tu cliente de correo...', false);
+            }
+          });
         }
 
-        links.forEach(link => {
+        // ===== CV DOWNLOAD (solo para [data-cv]) =====
+        const cvLinks = document.querySelectorAll('[data-cv]');
+        cvLinks.forEach(link => {
           link.addEventListener('click', async function (e) {
             e.preventDefault();
-            const url = link.getAttribute('href');
-            const filename = link.dataset.filename || url.split('/').pop();
-            show('Comprobando fichero...', false);
-            try {
-              const res = await fetch(url, { method: 'HEAD' });
-              if (!res.ok) throw new Error('Not found ' + res.status);
-              // si existe, descargar usando GET y blob
-              show('Downloading...', false);
-              const r2 = await fetch(url);
-              if (!r2.ok) throw new Error('Download failed ' + r2.status);
-              const blob = await r2.blob();
+            
+            const cvFb = document.getElementById('cv-feedback') || (function() {
+              const fb = document.createElement('div');
+              fb.id = 'cv-feedback';
+              document.body.appendChild(fb);
+              return fb;
+            })();
+
+            function showCvMsg(msg, isError) {
+              cvFb.textContent = msg;
+              cvFb.style.background = isError ? '#a12d2d' : '#1a7f37';
+              cvFb.style.display = 'block';
+              clearTimeout(cvFb._t);
+              cvFb._t = setTimeout(() => (cvFb.style.display = 'none'), 3500);
+            }
+
+            async function downloadBlob(url, filename) {
+              const res = await fetch(url);
+              if (!res.ok) throw new Error('Download failed ' + res.status);
+              const blob = await res.blob();
               const blobUrl = URL.createObjectURL(blob);
               const a = document.createElement('a');
               a.href = blobUrl;
@@ -352,10 +375,37 @@
               a.click();
               a.remove();
               URL.revokeObjectURL(blobUrl);
-              show('Starting download...', false);
+            }
+
+            const url = link.getAttribute('href');
+            const filename = link.dataset.filename || url.split('/').pop();
+            showCvMsg('Comprobando fichero...', false);
+
+            try {
+              try {
+                const head = await fetch(url, { method: 'HEAD' });
+                if (head.ok) {
+                  showCvMsg('Descargando...', false);
+                  await downloadBlob(url, filename);
+                  showCvMsg('Descarga iniciada', false);
+                  return;
+                }
+              } catch (headErr) {
+                console.warn('HEAD failed, trying GET', headErr);
+              }
+
+              showCvMsg('Descargando (GET)...', false);
+              await downloadBlob(url, filename);
+              showCvMsg('Descarga iniciada', false);
             } catch (err) {
               console.error('CV download error:', err);
-              show('CV not available on the server. Check the path.', true);
+              if (err.message && /404|Not Found/i.test(err.message)) {
+                showCvMsg('CV no encontrado (404). Verifica assets/docs/', true);
+              } else if (err instanceof TypeError) {
+                showCvMsg('Error de red o CORS. Revisa la ruta.', true);
+              } else {
+                showCvMsg('Error descargando CV. Revisa la consola.', true);
+              }
             }
           });
         });
