@@ -340,7 +340,7 @@
               const res = await fetch(url, { method: 'HEAD' });
               if (!res.ok) throw new Error('Not found ' + res.status);
               // si existe, descargar usando GET y blob
-              show('Descargando...', false);
+              show('Downloading...', false);
               const r2 = await fetch(url);
               if (!r2.ok) throw new Error('Download failed ' + r2.status);
               const blob = await r2.blob();
@@ -352,10 +352,10 @@
               a.click();
               a.remove();
               URL.revokeObjectURL(blobUrl);
-              show('Descarga iniciada', false);
+              show('Starting download...', false);
             } catch (err) {
               console.error('CV download error:', err);
-              show('CV no disponible en el servidor. Revisa la ruta.', true);
+              show('CV not available on the server. Check the path.', true);
             }
           });
         });
