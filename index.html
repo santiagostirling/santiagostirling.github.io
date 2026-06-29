@@ -1,485 +1,567 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Santiago Stirling | Data & Analytics Consultant</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <meta name="description" content="Data & Analytics Consultant specializing in Power BI, SQL, and Python. I help companies turn raw data into actionable insights." />
-    <link rel="stylesheet" href="assets/css/main.css" />
-    <link rel="stylesheet" href="assets/css/custom.css" />
-    <link rel="icon" type="image/png" href="images/foto_cv.png" />
-  </head>
-  <body class="is-preload">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Santiago Stirling | Data & Analytics Consultant</title>
+  <meta name="description" content="Data & Analytics Consultant specializing in Power BI, SQL, and Python. I help companies turn raw data into actionable insights."/>
+  <link rel="icon" type="image/png" href="images/foto_cv.png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="assets/css/fontawesome-all.min.css"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#0b0d13;--bg2:#12151e;--bg3:#181c28;
+      --glass:rgba(255,255,255,0.04);--glass-border:rgba(255,255,255,0.08);
+      --accent:#49bf9d;--accent2:#3aa88a;--accent-glow:rgba(73,191,157,0.25);
+      --text:#c8ccd4;--text-dim:#6b7280;--white:#f0f2f5;
+      --radius:14px;
+    }
+    html{scroll-behavior:smooth}
+    body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;overflow-x:hidden}
+    a{color:var(--accent);text-decoration:none;transition:color .2s}
+    a:hover{color:var(--white)}
+    ::selection{background:var(--accent);color:var(--bg)}
 
-    <header id="header">
-      <div class="inner">
-        <div class="lang-toggle">
-          <button id="lang-en" class="active" onclick="setLang('en')">
-            <svg class="flag" viewBox="0 0 60 30" xmlns="http://www.w3.org/2000/svg"><clipPath id="s"><path d="M0,0 v30 h60 v-30 z"/></clipPath><clipPath id="t"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"/></clipPath><g clip-path="url(#s)"><path d="M0,0 v30 h60 v-30 z" fill="#012169"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"/><path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#t)" stroke="#C8102E" stroke-width="4"/><path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10"/><path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/></g></svg>
-            EN
-          </button>
-          <button id="lang-es" onclick="setLang('es')">
-            <svg class="flag" viewBox="0 0 750 500" xmlns="http://www.w3.org/2000/svg"><rect width="750" height="500" fill="#c60b1e"/><rect width="750" height="250" y="125" fill="#ffc400"/></svg>
-            ES
-          </button>
-        </div>
-        <a href="#" class="image avatar"><img src="images/foto_cv.png" alt="Santiago Stirling" /></a>
-        <h1>
-          <strong>Santiago Stirling</strong><br />
-          <span data-i18n="hero_subtitle">I help companies turn data into decisions</span>
-        </h1>
+    /* ===== NAV ===== */
+    .nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 32px;display:flex;justify-content:space-between;align-items:center;background:rgba(11,13,19,0.75);backdrop-filter:blur(16px);border-bottom:1px solid var(--glass-border);transition:background .3s}
+    .nav-logo{font-weight:700;font-size:1.1rem;color:var(--white);letter-spacing:-0.02em}
+    .nav-logo span{color:var(--accent)}
+    .nav-links{display:flex;gap:24px;align-items:center}
+    .nav-links a{color:var(--text-dim);font-size:.85rem;font-weight:500;border:none;transition:color .2s}
+    .nav-links a:hover{color:var(--white)}
+    .lang-toggle{display:flex;gap:4px;margin-left:12px}
+    .lang-toggle button{background:var(--glass);border:1px solid var(--glass-border);color:var(--text-dim);padding:4px 10px;border-radius:8px;cursor:pointer;font-size:.75rem;font-weight:600;font-family:'Inter',sans-serif;display:flex;align-items:center;gap:5px;transition:all .2s}
+    .lang-toggle button.active{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+    .lang-toggle button:hover:not(.active){border-color:var(--accent);color:var(--accent)}
+    .lang-toggle .flag{width:16px;height:11px;border-radius:2px;flex-shrink:0}
+
+    /* ===== HERO ===== */
+    .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;padding:120px 32px 80px;overflow:hidden}
+    .hero::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(ellipse at 30% 50%,rgba(73,191,157,0.08) 0%,transparent 50%),radial-gradient(ellipse at 70% 30%,rgba(59,130,246,0.05) 0%,transparent 50%);animation:aurora 15s ease-in-out infinite alternate}
+    @keyframes aurora{0%{transform:translate(0,0) rotate(0deg)}100%{transform:translate(-3%,2%) rotate(3deg)}}
+    .hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse at center,black 30%,transparent 70%)}
+    .hero-content{position:relative;z-index:1;text-align:center;max-width:720px}
+    .hero-avatar{width:120px;height:120px;border-radius:50%;border:3px solid var(--accent);box-shadow:0 0 30px var(--accent-glow);margin:0 auto 28px;object-fit:cover}
+    .hero h1{font-size:clamp(2rem,5vw,3.2rem);font-weight:800;color:var(--white);line-height:1.15;letter-spacing:-0.03em;margin-bottom:16px}
+    .hero h1 span{color:var(--accent)}
+    .hero-subtitle{font-size:clamp(1rem,2.5vw,1.25rem);color:var(--text-dim);margin-bottom:36px;font-weight:400}
+    .hero-cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;border-radius:10px;font-weight:600;font-size:.9rem;font-family:'Inter',sans-serif;cursor:pointer;transition:all .25s;border:none}
+    .btn-primary{background:var(--accent);color:var(--bg);box-shadow:0 4px 20px var(--accent-glow)}
+    .btn-primary:hover{background:var(--white);color:var(--bg);box-shadow:0 4px 24px rgba(255,255,255,0.15);transform:translateY(-2px)}
+    .btn-outline{background:transparent;color:var(--accent);border:1.5px solid var(--accent)}
+    .btn-outline:hover{background:var(--accent);color:var(--bg);transform:translateY(-2px)}
+    .hero-stats{display:flex;gap:40px;justify-content:center;margin-top:48px}
+    .stat{text-align:center}
+    .stat-number{font-size:2rem;font-weight:800;color:var(--accent);display:block}
+    .stat-label{font-size:.75rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.08em;font-weight:500}
+
+    /* ===== SECTIONS ===== */
+    .section{padding:100px 32px;max-width:1100px;margin:0 auto}
+    .section-header{text-align:center;margin-bottom:56px}
+    .section-header h2{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;color:var(--white);letter-spacing:-0.02em;margin-bottom:12px}
+    .section-header p{color:var(--text-dim);max-width:520px;margin:0 auto;font-size:.95rem}
+    .section-label{display:inline-block;color:var(--accent);font-size:.8rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px}
+    .divider{width:48px;height:3px;background:var(--accent);border-radius:2px;margin:0 auto}
+
+    /* ===== SERVICES ===== */
+    .services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+    .service-card{background:var(--glass);border:1px solid var(--glass-border);border-radius:var(--radius);padding:32px 24px;text-align:center;transition:all .3s;position:relative;overflow:hidden}
+    .service-card::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:60%;height:1px;background:linear-gradient(90deg,transparent,var(--accent),transparent);opacity:0;transition:opacity .3s}
+    .service-card:hover{border-color:rgba(73,191,157,0.2);transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,0.3)}
+    .service-card:hover::before{opacity:1}
+    .service-card .icon{font-size:1.6rem;color:var(--accent);margin-bottom:16px}
+    .service-card h3{font-size:1rem;font-weight:600;color:var(--white);margin-bottom:10px}
+    .service-card p{font-size:.85rem;color:var(--text-dim);line-height:1.6;margin:0}
+
+    /* ===== SKILLS ===== */
+    .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+    .skill-item{display:flex;align-items:center;gap:16px;background:var(--glass);border:1px solid var(--glass-border);border-radius:var(--radius);padding:18px 20px;transition:border-color .3s}
+    .skill-item:hover{border-color:rgba(73,191,157,0.2)}
+    .skill-icon{width:40px;height:40px;border-radius:10px;background:rgba(73,191,157,0.1);display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:1rem;flex-shrink:0}
+    .skill-info{flex:1}
+    .skill-name{font-weight:600;font-size:.9rem;color:var(--white);margin-bottom:6px}
+    .skill-bar{height:4px;background:var(--bg);border-radius:2px;overflow:hidden}
+    .skill-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:2px;transition:width 1.2s cubic-bezier(.25,.8,.25,1)}
+    .skill-tags{font-size:.75rem;color:var(--text-dim);margin-top:4px}
+
+    /* ===== PROJECTS ===== */
+    .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+    .project-card{background:var(--glass);border:1px solid var(--glass-border);border-radius:var(--radius);overflow:hidden;transition:all .3s}
+    .project-card:hover{border-color:rgba(73,191,157,0.2);transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,0.3)}
+    .project-img{width:100%;height:180px;object-fit:contain;background:var(--bg2);padding:12px}
+    .project-body{padding:20px 22px 24px}
+    .project-body h3{font-size:1rem;font-weight:600;color:var(--white);margin-bottom:10px}
+    .project-body p{font-size:.85rem;color:var(--text-dim);line-height:1.6;margin-bottom:14px}
+    .tech-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+    .tech-tags span{background:rgba(73,191,157,0.12);color:var(--accent);padding:3px 10px;border-radius:6px;font-size:.72rem;font-weight:600}
+    .project-link{display:inline-flex;align-items:center;gap:6px;font-size:.85rem;font-weight:500;color:var(--accent)}
+    .project-link:hover{color:var(--white)}
+
+    /* ===== CONTACT ===== */
+    .contact-section{background:var(--bg2);border-top:1px solid var(--glass-border)}
+    .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+    .contact-info h3{font-size:1.3rem;font-weight:700;color:var(--white);margin-bottom:20px}
+    .contact-info p{color:var(--text-dim);margin-bottom:28px;font-size:.9rem}
+    .contact-links{list-style:none;display:flex;flex-direction:column;gap:16px}
+    .contact-links li{display:flex;align-items:center;gap:12px;color:var(--text)}
+    .contact-links li i{width:36px;height:36px;border-radius:10px;background:var(--glass);border:1px solid var(--glass-border);display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:.85rem}
+    .contact-links li a{color:var(--text);font-size:.9rem}
+    .contact-links li a:hover{color:var(--accent)}
+    .contact-form{display:flex;flex-direction:column;gap:14px}
+    .contact-form input,.contact-form textarea{background:var(--glass);border:1px solid var(--glass-border);border-radius:10px;padding:14px 16px;color:var(--white);font-family:'Inter',sans-serif;font-size:.9rem;transition:border-color .2s;resize:vertical}
+    .contact-form input:focus,.contact-form textarea:focus{outline:none;border-color:var(--accent)}
+    .contact-form input::placeholder,.contact-form textarea::placeholder{color:var(--text-dim)}
+    .contact-form .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+    /* ===== FOOTER ===== */
+    .footer{padding:32px;text-align:center;border-top:1px solid var(--glass-border)}
+    .footer-icons{display:flex;justify-content:center;gap:16px;margin-bottom:16px}
+    .footer-icons a{width:40px;height:40px;border-radius:10px;background:var(--glass);border:1px solid var(--glass-border);display:flex;align-items:center;justify-content:center;color:var(--text-dim);font-size:1rem;transition:all .2s}
+    .footer-icons a:hover{color:var(--accent);border-color:var(--accent);transform:translateY(-2px)}
+    .footer p{font-size:.8rem;color:var(--text-dim)}
+
+    /* ===== TOAST ===== */
+    .contact-toast{position:fixed;right:20px;bottom:24px;min-width:260px;max-width:calc(100% - 48px);padding:12px 14px;color:#fff;border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.4);display:flex;gap:10px;align-items:center;transform:translateY(18px);opacity:0;transition:transform .25s cubic-bezier(.2,.9,.2,1),opacity .25s;z-index:1400;font-size:.9rem}
+    .contact-toast.show{transform:translateY(0);opacity:1}
+    .contact-toast.success{background:linear-gradient(90deg,#1fa65a,#0f8a45)}
+    .contact-toast.error{background:linear-gradient(90deg,#d64545,#a12d2d)}
+    .contact-toast .msg{flex:1}
+    .contact-toast .close{background:transparent;border:none;color:rgba(255,255,255,.9);font-weight:700;cursor:pointer;padding:6px;border-radius:6px}
+    #cv-feedback{position:fixed;right:16px;bottom:64px;display:none;padding:8px 12px;border-radius:6px;color:#fff;font-size:.9rem;z-index:1300}
+    #contact-feedback{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+
+    /* ===== FADE IN ===== */
+    .fade-in{opacity:0;transform:translateY(30px);transition:opacity .7s,transform .7s}
+    .fade-in.visible{opacity:1;transform:translateY(0)}
+
+    /* ===== MOBILE ===== */
+    @media(max-width:768px){
+      .nav{padding:12px 20px}
+      .nav-links a:not(.lang-toggle *){display:none}
+      .hero{padding:100px 20px 60px}
+      .hero-stats{gap:24px}
+      .section{padding:64px 20px}
+      .contact-grid{grid-template-columns:1fr}
+      .contact-form .form-row{grid-template-columns:1fr}
+      .hero-cta{flex-direction:column;align-items:center}
+    }
+    @media(max-width:480px){
+      .hero-stats{flex-direction:column;gap:16px}
+      .services-grid,.skills-grid,.projects-grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav class="nav">
+    <div class="nav-logo">Santiago<span>.</span></div>
+    <div class="nav-links">
+      <a href="#services" data-i18n="nav_services">Services</a>
+      <a href="#skills" data-i18n="nav_skills">Skills</a>
+      <a href="#projects" data-i18n="nav_projects">Projects</a>
+      <a href="#contact" data-i18n="nav_contact">Contact</a>
+      <div class="lang-toggle">
+        <button id="lang-en" class="active" onclick="setLang('en')">
+          <svg class="flag" viewBox="0 0 60 30" xmlns="http://www.w3.org/2000/svg"><clipPath id="s"><path d="M0,0 v30 h60 v-30 z"/></clipPath><clipPath id="t2"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"/></clipPath><g clip-path="url(#s)"><path d="M0,0 v30 h60 v-30 z" fill="#012169"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"/><path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#t2)" stroke="#C8102E" stroke-width="4"/><path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10"/><path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/></g></svg>
+          EN
+        </button>
+        <button id="lang-es" onclick="setLang('es')">
+          <svg class="flag" viewBox="0 0 750 500" xmlns="http://www.w3.org/2000/svg"><rect width="750" height="500" fill="#c60b1e"/><rect width="750" height="250" y="125" fill="#ffc400"/></svg>
+          ES
+        </button>
       </div>
-    </header>
-
-    <div id="main">
-
-      <!-- About -->
-      <section id="one">
-        <header class="major">
-          <h2 data-i18n="about_title">About Me</h2>
-        </header>
-        <p data-i18n="about_text">
-          I'm a Certified Public Accountant with 5+ years of experience helping businesses unlock the value hidden in their data.
-          From building automated dashboards to forecasting revenue, I bridge the gap between raw numbers and strategic decisions.
-          <br><br>
-          My clients rely on me to integrate messy data sources, automate repetitive reporting, and deliver clear, visual insights they can act on — using <strong>Power BI</strong>, <strong>SQL</strong>, and <strong>Python</strong>.
-        </p>
-      </section>
-
-      <!-- Services -->
-      <section id="services">
-        <header class="major">
-          <h2 data-i18n="services_title">What I Do</h2>
-        </header>
-        <div class="services-grid">
-          <div class="service-card">
-            <div class="icon"><i class="fas fa-chart-bar"></i></div>
-            <h3 data-i18n="svc_bi_title">BI Dashboards</h3>
-            <p data-i18n="svc_bi_desc">Interactive Power BI dashboards with automated data refresh, connecting multiple sources into a single source of truth.</p>
-          </div>
-          <div class="service-card">
-            <div class="icon"><i class="fas fa-cogs"></i></div>
-            <h3 data-i18n="svc_auto_title">Data Automation</h3>
-            <p data-i18n="svc_auto_desc">Python and SQL pipelines that extract, transform, and load data automatically — eliminating manual work and errors.</p>
-          </div>
-          <div class="service-card">
-            <div class="icon"><i class="fas fa-chart-line"></i></div>
-            <h3 data-i18n="svc_forecast_title">Forecasting</h3>
-            <p data-i18n="svc_forecast_desc">Predictive models for revenue, demand, and KPIs using statistical methods and machine learning.</p>
-          </div>
-          <div class="service-card">
-            <div class="icon"><i class="fas fa-database"></i></div>
-            <h3 data-i18n="svc_strategy_title">Data Strategy</h3>
-            <p data-i18n="svc_strategy_desc">End-to-end data architecture consulting: from warehouse design to reporting layer and team enablement.</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- Skills -->
-      <section id="skills">
-        <header class="major">
-          <h2 data-i18n="skills_title">Technical Skills</h2>
-        </header>
-        <ul>
-          <li>Power BI (Data Modeling, DAX, Power Query)</li>
-          <li>SQL (ETL, Optimization, Stored Procedures)</li>
-          <li>Python (Pandas, Prophet, Automation, APIs)</li>
-          <li>Excel (Advanced, VBA)</li>
-          <li>Databricks & Data Warehousing</li>
-        </ul>
-      </section>
-
-      <!-- Projects -->
-      <section id="two">
-        <header class="major">
-          <h2 data-i18n="projects_title">Projects</h2>
-        </header>
-        <div class="row">
-
-          <article class="col-6 col-12-xsmall work-item">
-            <a href="https://github.com/santiagostirling/sales_dashboard" target="_blank" rel="noopener noreferrer" class="project-thumb">
-              <img src="images/thumbs/project_sales.png" alt="Sales Dashboard Analysis" />
-            </a>
-            <h3 data-i18n="proj1_title">Sales Dashboard Analysis</h3>
-            <div class="tech-tags">
-              <span>Python</span><span>Pandas</span><span>Matplotlib</span>
-            </div>
-            <p data-i18n="proj1_desc">Exploratory data analysis on retail sales data with visualizations and key business insights.</p>
-            <a href="https://github.com/santiagostirling/sales_dashboard" target="_blank" class="project-link">
-              <i class="fab fa-github"></i> <span data-i18n="view_github">View on GitHub</span>
-            </a>
-          </article>
-
-          <article class="col-6 col-12-xsmall work-item">
-            <a href="https://github.com/santiagostirling/sql_data_pipeline" target="_blank" rel="noopener noreferrer" class="project-thumb">
-              <img src="images/thumbs/project_sql.png" alt="SQL Data Pipeline" />
-            </a>
-            <h3 data-i18n="proj2_title">SQL Data Pipeline</h3>
-            <div class="tech-tags">
-              <span>SQL</span><span>ETL</span><span>Data Warehouse</span>
-            </div>
-            <p data-i18n="proj2_desc">End-to-end ETL pipeline with staging, transformation, and reporting layers for a retail data warehouse.</p>
-            <a href="https://github.com/santiagostirling/sql_data_pipeline" target="_blank" class="project-link">
-              <i class="fab fa-github"></i> <span data-i18n="view_github">View on GitHub</span>
-            </a>
-          </article>
-
-          <article class="col-6 col-12-xsmall work-item">
-            <a href="https://github.com/santiagostirling/revenue_forecasting" target="_blank" rel="noopener noreferrer" class="project-thumb">
-              <img src="images/thumbs/project_forecast.png" alt="Revenue Forecasting" />
-            </a>
-            <h3 data-i18n="proj3_title">Revenue Forecasting</h3>
-            <div class="tech-tags">
-              <span>Python</span><span>Statsmodels</span><span>Time Series</span>
-            </div>
-            <p data-i18n="proj3_desc">Time series forecasting model predicting monthly revenue with trend and seasonality decomposition.</p>
-            <a href="https://github.com/santiagostirling/revenue_forecasting" target="_blank" class="project-link">
-              <i class="fab fa-github"></i> <span data-i18n="view_github">View on GitHub</span>
-            </a>
-          </article>
-
-          <article class="col-6 col-12-xsmall work-item">
-            <a href="https://app.powerbi.com/view?r=eyJrIjoiYjZjNTA1MzctYTcwYi00OGE3LTllZTItMTdlMjU2MGY5MTgzIiwidCI6ImRjNGFjZGIwLTI5YzEtNDBjNC1iMWE1LTg5YjM0MDdjMWI1ZiIsImMiOjR9" target="_blank" rel="noopener noreferrer" class="project-thumb">
-              <img src="images/thumbs/powerbi.png" alt="Power BI CRM Dashboard" />
-            </a>
-            <h3 data-i18n="proj4_title">Power BI CRM Dashboard</h3>
-            <div class="tech-tags">
-              <span>Power BI</span><span>DAX</span><span>SQL</span>
-            </div>
-            <p data-i18n="proj4_desc">Weekly pipeline tracking integrating CRM Dynamics and SQL with automatic refresh via Power BI Service.</p>
-            <a href="https://app.powerbi.com/view?r=eyJrIjoiYjZjNTA1MzctYTcwYi00OGE3LTllZTItMTdlMjU2MGY5MTgzIiwidCI6ImRjNGFjZGIwLTI5YzEtNDBjNC1iMWE1LTg5YjM0MDdjMWI1ZiIsImMiOjR9" target="_blank" class="project-link">
-              <i class="fas fa-external-link-alt"></i> <span data-i18n="view_live">View Live Dashboard</span>
-            </a>
-          </article>
-
-        </div>
-      </section>
-
-      <!-- Contact -->
-      <section id="three">
-        <h2 data-i18n="contact_title">Let's Work Together</h2>
-        <p data-i18n="contact_text">
-          Have a data challenge or need help making sense of your numbers? Let's talk — I'd love to help.
-        </p>
-        <div class="row">
-          <div class="col-8 col-12-small">
-            <form id="contact-form" novalidate>
-              <div class="row gtr-uniform gtr-50">
-                <div class="col-6 col-12-xsmall">
-                  <input type="text" name="name" id="name" placeholder="Name" data-i18n-placeholder="ph_name" required />
-                </div>
-                <div class="col-6 col-12-xsmall">
-                  <input type="email" name="email" id="email" placeholder="Email" data-i18n-placeholder="ph_email" required />
-                </div>
-                <div class="col-12">
-                  <textarea name="message" id="message" placeholder="Message" data-i18n-placeholder="ph_message" rows="4" required></textarea>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-12">
-                  <div style="display:flex;align-items:center;gap:12px;">
-                    <button type="submit" id="contact-submit" class="primary" data-i18n="btn_send">Send Message</button>
-                    <div id="contact-spinner" aria-hidden="true"></div>
-                    <div id="contact-feedback" role="status"></div>
-                  </div>
-                </div>
-              </div>
-            </form>
-          </div>
-          <div class="col-4 col-12-small">
-            <ul class="labeled-icons">
-              <li>
-                <h3 class="icon solid fa-home"><span class="label">Location</span></h3>
-                Montevideo, Uruguay
-              </li>
-              <li>
-                <h3 class="icon solid fa-envelope"><span class="label">Email</span></h3>
-                <a href="mailto:22santistirling@gmail.com">22santistirling@gmail.com</a>
-              </li>
-              <li>
-                <h3 class="icon brands fa-linkedin"><span class="label">LinkedIn</span></h3>
-                <a href="https://www.linkedin.com/in/santiago-stirling-878bb5154/" target="_blank" rel="noopener noreferrer">
-                  linkedin.com/in/santiagostirling
-                </a>
-              </li>
-              <li>
-                <h3 class="icon solid fa-file-pdf"><span class="label">CV</span></h3>
-                <a href="./assets/docs/Santiago_Stirling_CV.pdf" data-cv data-filename="Santiago_Stirling_CV.pdf" target="_blank" rel="noopener noreferrer" data-i18n="download_cv">
-                  Download My CV
-                </a>
-              </li>
-              <li>
-                <h3 class="icon brands fa-github"><span class="label">GitHub</span></h3>
-                <a href="https://github.com/santiagostirling" target="_blank" rel="noopener noreferrer">
-                  github.com/santiagostirling
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </section>
     </div>
+  </nav>
 
-    <footer id="footer">
-      <div class="inner">
-        <ul class="icons">
-          <li>
-            <a href="./assets/docs/Santiago_Stirling_CV.pdf" data-cv data-filename="Santiago_Stirling_CV.pdf" class="icon solid fa-file-pdf" target="_blank" rel="noopener noreferrer">
-              <span class="label">Download CV</span>
-            </a>
-          </li>
-          <li><a href="https://www.linkedin.com/in/santiago-stirling-878bb5154/" class="icon brands fa-linkedin" target="_blank" rel="noopener noreferrer"><span class="label">LinkedIn</span></a></li>
-          <li><a href="https://github.com/santiagostirling" class="icon brands fa-github" target="_blank" rel="noopener noreferrer"><span class="label">GitHub</span></a></li>
-          <li><a href="mailto:22santistirling@gmail.com" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
-        </ul>
-        <ul class="copyright">
-          <li>&copy; 2025 Santiago Stirling</li><li>Design adapted from HTML5 UP Strata</li>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-content">
+      <img src="images/foto_cv.png" alt="Santiago Stirling" class="hero-avatar"/>
+      <h1>Santiago <span>Stirling</span></h1>
+      <p class="hero-subtitle" data-i18n="hero_subtitle">I help companies turn data into decisions</p>
+      <div class="hero-cta">
+        <a href="#contact" class="btn btn-primary" data-i18n="btn_hire">Hire Me</a>
+        <a href="./assets/docs/Santiago_Stirling_CV.pdf" class="btn btn-outline" data-cv data-filename="Santiago_Stirling_CV.pdf" target="_blank" rel="noopener noreferrer" data-i18n="download_cv">Download CV</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-number">5+</span><span class="stat-label" data-i18n="stat_years">Years Experience</span></div>
+        <div class="stat"><span class="stat-number">30+</span><span class="stat-label" data-i18n="stat_projects">Projects Delivered</span></div>
+        <div class="stat"><span class="stat-number">15+</span><span class="stat-label" data-i18n="stat_clients">Happy Clients</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="section fade-in" id="services">
+    <div class="section-header">
+      <span class="section-label" data-i18n="services_label">What I Do</span>
+      <h2 data-i18n="services_title">Services</h2>
+      <p data-i18n="services_sub">End-to-end data solutions, from raw data to strategic insights.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="icon"><i class="fas fa-chart-bar"></i></div>
+        <h3 data-i18n="svc_bi_title">BI Dashboards</h3>
+        <p data-i18n="svc_bi_desc">Interactive Power BI dashboards with automated data refresh, connecting multiple sources into a single source of truth.</p>
+      </div>
+      <div class="service-card">
+        <div class="icon"><i class="fas fa-cogs"></i></div>
+        <h3 data-i18n="svc_auto_title">Data Automation</h3>
+        <p data-i18n="svc_auto_desc">Python and SQL pipelines that extract, transform, and load data automatically — eliminating manual work and errors.</p>
+      </div>
+      <div class="service-card">
+        <div class="icon"><i class="fas fa-chart-line"></i></div>
+        <h3 data-i18n="svc_forecast_title">Forecasting</h3>
+        <p data-i18n="svc_forecast_desc">Predictive models for revenue, demand, and KPIs using statistical methods and machine learning.</p>
+      </div>
+      <div class="service-card">
+        <div class="icon"><i class="fas fa-database"></i></div>
+        <h3 data-i18n="svc_strategy_title">Data Strategy</h3>
+        <p data-i18n="svc_strategy_desc">End-to-end data architecture consulting: from warehouse design to reporting layer and team enablement.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section class="section fade-in" id="skills">
+    <div class="section-header">
+      <span class="section-label" data-i18n="skills_label">Tech Stack</span>
+      <h2 data-i18n="skills_title">Technical Skills</h2>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-item">
+        <div class="skill-icon"><i class="fas fa-chart-pie"></i></div>
+        <div class="skill-info">
+          <div class="skill-name">Power BI</div>
+          <div class="skill-bar"><div class="skill-fill" data-width="95"></div></div>
+          <div class="skill-tags">Data Modeling · DAX · Power Query</div>
+        </div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-icon"><i class="fas fa-database"></i></div>
+        <div class="skill-info">
+          <div class="skill-name">SQL</div>
+          <div class="skill-bar"><div class="skill-fill" data-width="90"></div></div>
+          <div class="skill-tags">ETL · Optimization · Stored Procedures</div>
+        </div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-icon"><i class="fab fa-python"></i></div>
+        <div class="skill-info">
+          <div class="skill-name">Python</div>
+          <div class="skill-bar"><div class="skill-fill" data-width="85"></div></div>
+          <div class="skill-tags">Pandas · Prophet · Automation · APIs</div>
+        </div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-icon"><i class="fas fa-file-excel"></i></div>
+        <div class="skill-info">
+          <div class="skill-name">Excel</div>
+          <div class="skill-bar"><div class="skill-fill" data-width="92"></div></div>
+          <div class="skill-tags">Advanced · VBA · Financial Modeling</div>
+        </div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-icon"><i class="fas fa-server"></i></div>
+        <div class="skill-info">
+          <div class="skill-name">Databricks</div>
+          <div class="skill-bar"><div class="skill-fill" data-width="70"></div></div>
+          <div class="skill-tags">Data Warehousing · Spark · Delta Lake</div>
+        </div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-icon"><i class="fas fa-project-diagram"></i></div>
+        <div class="skill-info">
+          <div class="skill-name">Data Strategy</div>
+          <div class="skill-bar"><div class="skill-fill" data-width="80"></div></div>
+          <div class="skill-tags">Architecture · Governance · Enablement</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section class="section fade-in" id="projects">
+    <div class="section-header">
+      <span class="section-label" data-i18n="projects_label">Portfolio</span>
+      <h2 data-i18n="projects_title">Projects</h2>
+      <p data-i18n="projects_sub">Real-world projects showcasing data analysis, automation, and visualization.</p>
+    </div>
+    <div class="projects-grid">
+      <div class="project-card">
+        <img src="images/thumbs/project_sales.png" alt="Sales Dashboard" class="project-img"/>
+        <div class="project-body">
+          <h3 data-i18n="proj1_title">Sales Dashboard Analysis</h3>
+          <div class="tech-tags"><span>Python</span><span>Pandas</span><span>Matplotlib</span></div>
+          <p data-i18n="proj1_desc">Exploratory data analysis on retail sales data with visualizations and key business insights.</p>
+          <a href="https://github.com/santiagostirling/sales_dashboard" target="_blank" class="project-link"><i class="fab fa-github"></i> <span data-i18n="view_github">View on GitHub</span></a>
+        </div>
+      </div>
+      <div class="project-card">
+        <img src="images/thumbs/project_sql.png" alt="SQL Pipeline" class="project-img"/>
+        <div class="project-body">
+          <h3 data-i18n="proj2_title">SQL Data Pipeline</h3>
+          <div class="tech-tags"><span>SQL</span><span>ETL</span><span>Data Warehouse</span></div>
+          <p data-i18n="proj2_desc">End-to-end ETL pipeline with staging, transformation, and reporting layers for a retail data warehouse.</p>
+          <a href="https://github.com/santiagostirling/sql_data_pipeline" target="_blank" class="project-link"><i class="fab fa-github"></i> <span data-i18n="view_github">View on GitHub</span></a>
+        </div>
+      </div>
+      <div class="project-card">
+        <img src="images/thumbs/project_forecast.png" alt="Revenue Forecasting" class="project-img"/>
+        <div class="project-body">
+          <h3 data-i18n="proj3_title">Revenue Forecasting</h3>
+          <div class="tech-tags"><span>Python</span><span>Statsmodels</span><span>Time Series</span></div>
+          <p data-i18n="proj3_desc">Time series forecasting model predicting monthly revenue with trend and seasonality decomposition.</p>
+          <a href="https://github.com/santiagostirling/revenue_forecasting" target="_blank" class="project-link"><i class="fab fa-github"></i> <span data-i18n="view_github">View on GitHub</span></a>
+        </div>
+      </div>
+      <div class="project-card">
+        <img src="images/thumbs/powerbi.png" alt="Power BI Dashboard" class="project-img"/>
+        <div class="project-body">
+          <h3 data-i18n="proj4_title">Power BI CRM Dashboard</h3>
+          <div class="tech-tags"><span>Power BI</span><span>DAX</span><span>SQL</span></div>
+          <p data-i18n="proj4_desc">Weekly pipeline tracking integrating CRM Dynamics and SQL with automatic refresh via Power BI Service.</p>
+          <a href="https://app.powerbi.com/view?r=eyJrIjoiYjZjNTA1MzctYTcwYi00OGE3LTllZTItMTdlMjU2MGY5MTgzIiwidCI6ImRjNGFjZGIwLTI5YzEtNDBjNC1iMWE1LTg5YjM0MDdjMWI1ZiIsImMiOjR9" target="_blank" class="project-link"><i class="fas fa-external-link-alt"></i> <span data-i18n="view_live">View Live Dashboard</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="section contact-section fade-in" id="contact">
+    <div class="section-header">
+      <span class="section-label" data-i18n="contact_label">Get in Touch</span>
+      <h2 data-i18n="contact_title">Let's Work Together</h2>
+      <p data-i18n="contact_text">Have a data challenge or need help making sense of your numbers? Let's talk.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <h3 data-i18n="contact_info_title">Contact Info</h3>
+        <ul class="contact-links">
+          <li><i class="fas fa-map-marker-alt"></i> Montevideo, Uruguay</li>
+          <li><i class="fas fa-envelope"></i> <a href="mailto:22santistirling@gmail.com">22santistirling@gmail.com</a></li>
+          <li><i class="fab fa-linkedin"></i> <a href="https://www.linkedin.com/in/santiago-stirling-878bb5154/" target="_blank" rel="noopener noreferrer">linkedin.com/in/santiagostirling</a></li>
+          <li><i class="fab fa-github"></i> <a href="https://github.com/santiagostirling" target="_blank" rel="noopener noreferrer">github.com/santiagostirling</a></li>
         </ul>
       </div>
-    </footer>
+      <form id="contact-form" class="contact-form" novalidate>
+        <div class="form-row">
+          <input type="text" name="name" id="name" placeholder="Name" data-i18n-placeholder="ph_name" required/>
+          <input type="email" name="email" id="email" placeholder="Email" data-i18n-placeholder="ph_email" required/>
+        </div>
+        <textarea name="message" id="message" placeholder="Message" data-i18n-placeholder="ph_message" rows="5" required></textarea>
+        <button type="submit" id="contact-submit" class="btn btn-primary" data-i18n="btn_send">Send Message</button>
+        <div id="contact-feedback" role="status"></div>
+      </form>
+    </div>
+  </section>
 
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/jquery.poptrox.min.js"></script>
-    <script src="assets/js/browser.min.js"></script>
-    <script src="assets/js/breakpoints.min.js"></script>
-    <script src="assets/js/util.js"></script>
-    <script src="assets/js/main.js"></script>
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-icons">
+      <a href="./assets/docs/Santiago_Stirling_CV.pdf" data-cv data-filename="Santiago_Stirling_CV.pdf" target="_blank" rel="noopener noreferrer"><i class="fas fa-file-pdf"></i></a>
+      <a href="https://www.linkedin.com/in/santiago-stirling-878bb5154/" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i></a>
+      <a href="https://github.com/santiagostirling" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i></a>
+      <a href="mailto:22santistirling@gmail.com"><i class="fas fa-envelope"></i></a>
+    </div>
+    <p>&copy; 2025 Santiago Stirling</p>
+  </footer>
 
-    <script>
-      // ===== i18n =====
-      var translations = {
-        en: {
-          hero_subtitle: "I help companies turn data into decisions",
-          about_title: "About Me",
-          about_text: 'I\'m a Certified Public Accountant with 5+ years of experience helping businesses unlock the value hidden in their data. From building automated dashboards to forecasting revenue, I bridge the gap between raw numbers and strategic decisions.<br><br>My clients rely on me to integrate messy data sources, automate repetitive reporting, and deliver clear, visual insights they can act on — using <strong>Power BI</strong>, <strong>SQL</strong>, and <strong>Python</strong>.',
-          services_title: "What I Do",
-          svc_bi_title: "BI Dashboards",
-          svc_bi_desc: "Interactive Power BI dashboards with automated data refresh, connecting multiple sources into a single source of truth.",
-          svc_auto_title: "Data Automation",
-          svc_auto_desc: "Python and SQL pipelines that extract, transform, and load data automatically — eliminating manual work and errors.",
-          svc_forecast_title: "Forecasting",
-          svc_forecast_desc: "Predictive models for revenue, demand, and KPIs using statistical methods and machine learning.",
-          svc_strategy_title: "Data Strategy",
-          svc_strategy_desc: "End-to-end data architecture consulting: from warehouse design to reporting layer and team enablement.",
-          skills_title: "Technical Skills",
-          projects_title: "Projects",
-          proj1_title: "Sales Dashboard Analysis",
-          proj1_desc: "Exploratory data analysis on retail sales data with visualizations and key business insights.",
-          proj2_title: "SQL Data Pipeline",
-          proj2_desc: "End-to-end ETL pipeline with staging, transformation, and reporting layers for a retail data warehouse.",
-          proj3_title: "Revenue Forecasting",
-          proj3_desc: "Time series forecasting model predicting monthly revenue with trend and seasonality decomposition.",
-          proj4_title: "Power BI CRM Dashboard",
-          proj4_desc: "Weekly pipeline tracking integrating CRM Dynamics and SQL with automatic refresh via Power BI Service.",
-          view_github: "View on GitHub",
-          view_live: "View Live Dashboard",
-          contact_title: "Let’s Work Together",
-          contact_text: "Have a data challenge or need help making sense of your numbers? Let’s talk — I’d love to help.",
-          ph_name: "Name",
-          ph_email: "Email",
-          ph_message: "Message",
-          btn_send: "Send Message",
-          download_cv: "Download My CV",
-          msg_fill_all: "Please fill in all fields.",
-          msg_invalid_email: "Invalid email address.",
-          msg_sent: "Message sent. Thank you!",
-          msg_send_error: "Error sending message.",
-          msg_network_error: "Network error. Check console.",
-          msg_opening_mail: "Opening your email client...",
-          msg_checking_file: "Checking file...",
-          msg_downloading: "Downloading...",
-          msg_download_started: "Download started",
-          msg_cv_not_found: "CV not found (404). Check assets/docs/",
-          msg_cv_cors: "Network or CORS error. Check the path.",
-          msg_cv_error: "Error downloading CV. Check console."
-        },
-        es: {
-          hero_subtitle: "Ayudo a empresas a convertir datos en decisiones",
-          about_title: "Sobre Mí",
-          about_text: 'Soy Contador Público con más de 5 años de experiencia ayudando a empresas a descubrir el valor oculto en sus datos. Desde dashboards automatizados hasta pronósticos de ingresos, conecto los números con las decisiones estratégicas.<br><br>Mis clientes confían en mí para integrar fuentes de datos complejas, automatizar reportes repetitivos y entregar insights claros y visuales — usando <strong>Power BI</strong>, <strong>SQL</strong> y <strong>Python</strong>.',
-          services_title: "Qué Hago",
-          svc_bi_title: "Dashboards BI",
-          svc_bi_desc: "Dashboards interactivos en Power BI con actualización automática, conectando múltiples fuentes en una única fuente de verdad.",
-          svc_auto_title: "Automatización de Datos",
-          svc_auto_desc: "Pipelines en Python y SQL que extraen, transforman y cargan datos automáticamente — eliminando trabajo manual y errores.",
-          svc_forecast_title: "Forecasting",
-          svc_forecast_desc: "Modelos predictivos para ingresos, demanda y KPIs usando métodos estadísticos y machine learning.",
-          svc_strategy_title: "Estrategia de Datos",
-          svc_strategy_desc: "Consultoría integral de arquitectura de datos: desde diseño de warehouse hasta capa de reportes y habilitación de equipos.",
-          skills_title: "Habilidades Técnicas",
-          projects_title: "Proyectos",
-          proj1_title: "Análisis de Ventas",
-          proj1_desc: "Análisis exploratorio de datos de ventas retail con visualizaciones e insights de negocio.",
-          proj2_title: "Pipeline de Datos SQL",
-          proj2_desc: "Pipeline ETL completo con capas de staging, transformación y reportes para un data warehouse retail.",
-          proj3_title: "Pronóstico de Ingresos",
-          proj3_desc: "Modelo de series temporales para predecir ingresos mensuales con descomposición de tendencia y estacionalidad.",
-          proj4_title: "Dashboard CRM en Power BI",
-          proj4_desc: "Seguimiento semanal del pipeline integrando CRM Dynamics y SQL con actualización automática en Power BI Service.",
-          view_github: "Ver en GitHub",
-          view_live: "Ver Dashboard en Vivo",
-          contact_title: "Trabajemos Juntos",
-          contact_text: "¿Tenés un desafío con datos o necesitás ayuda para entender tus números? Hablemos — me encantaría ayudarte.",
-          ph_name: "Nombre",
-          ph_email: "Email",
-          ph_message: "Mensaje",
-          btn_send: "Enviar Mensaje",
-          download_cv: "Descargar Mi CV",
-          msg_fill_all: "Completá todos los campos.",
-          msg_invalid_email: "Email inválido.",
-          msg_sent: "Mensaje enviado. ¡Gracias!",
-          msg_send_error: "Error enviando el mensaje.",
-          msg_network_error: "Error de red. Revisá la consola.",
-          msg_opening_mail: "Abriendo tu cliente de correo...",
-          msg_checking_file: "Comprobando archivo...",
-          msg_downloading: "Descargando...",
-          msg_download_started: "Descarga iniciada",
-          msg_cv_not_found: "CV no encontrado (404). Verificá assets/docs/",
-          msg_cv_cors: "Error de red o CORS. Revisá la ruta.",
-          msg_cv_error: "Error descargando CV. Revisá la consola."
-        }
-      };
-
-      var currentLang = localStorage.getItem('lang') || (navigator.language.startsWith('es') ? 'es' : 'en');
-
-      function t(key) {
-        return (translations[currentLang] && translations[currentLang][key]) || translations.en[key] || key;
+  <script>
+    // ===== i18n =====
+    var translations = {
+      en: {
+        nav_services:"Services",nav_skills:"Skills",nav_projects:"Projects",nav_contact:"Contact",
+        hero_subtitle:"I help companies turn data into decisions",
+        btn_hire:"Hire Me",download_cv:"Download CV",
+        stat_years:"Years Experience",stat_projects:"Projects Delivered",stat_clients:"Happy Clients",
+        services_label:"What I Do",services_title:"Services",services_sub:"End-to-end data solutions, from raw data to strategic insights.",
+        svc_bi_title:"BI Dashboards",svc_bi_desc:"Interactive Power BI dashboards with automated data refresh, connecting multiple sources into a single source of truth.",
+        svc_auto_title:"Data Automation",svc_auto_desc:"Python and SQL pipelines that extract, transform, and load data automatically — eliminating manual work and errors.",
+        svc_forecast_title:"Forecasting",svc_forecast_desc:"Predictive models for revenue, demand, and KPIs using statistical methods and machine learning.",
+        svc_strategy_title:"Data Strategy",svc_strategy_desc:"End-to-end data architecture consulting: from warehouse design to reporting layer and team enablement.",
+        skills_label:"Tech Stack",skills_title:"Technical Skills",
+        projects_label:"Portfolio",projects_title:"Projects",projects_sub:"Real-world projects showcasing data analysis, automation, and visualization.",
+        proj1_title:"Sales Dashboard Analysis",proj1_desc:"Exploratory data analysis on retail sales data with visualizations and key business insights.",
+        proj2_title:"SQL Data Pipeline",proj2_desc:"End-to-end ETL pipeline with staging, transformation, and reporting layers for a retail data warehouse.",
+        proj3_title:"Revenue Forecasting",proj3_desc:"Time series forecasting model predicting monthly revenue with trend and seasonality decomposition.",
+        proj4_title:"Power BI CRM Dashboard",proj4_desc:"Weekly pipeline tracking integrating CRM Dynamics and SQL with automatic refresh via Power BI Service.",
+        view_github:"View on GitHub",view_live:"View Live Dashboard",
+        contact_label:"Get in Touch",contact_title:"Let's Work Together",contact_text:"Have a data challenge or need help making sense of your numbers? Let's talk.",
+        contact_info_title:"Contact Info",
+        ph_name:"Name",ph_email:"Email",ph_message:"Tell me about your project...",btn_send:"Send Message",
+        msg_fill_all:"Please fill in all fields.",msg_invalid_email:"Invalid email address.",
+        msg_opening_mail:"Opening your email client...",
+        msg_checking_file:"Checking file...",msg_downloading:"Downloading...",msg_download_started:"Download started",
+        msg_cv_not_found:"CV not found (404).",msg_cv_cors:"Network or CORS error.",msg_cv_error:"Error downloading CV."
+      },
+      es: {
+        nav_services:"Servicios",nav_skills:"Skills",nav_projects:"Proyectos",nav_contact:"Contacto",
+        hero_subtitle:"Ayudo a empresas a convertir datos en decisiones",
+        btn_hire:"Contrátame",download_cv:"Descargar CV",
+        stat_years:"Años de Experiencia",stat_projects:"Proyectos Entregados",stat_clients:"Clientes Satisfechos",
+        services_label:"Qué Hago",services_title:"Servicios",services_sub:"Soluciones de datos de principio a fin, desde datos crudos hasta insights estratégicos.",
+        svc_bi_title:"Dashboards BI",svc_bi_desc:"Dashboards interactivos en Power BI con actualización automática, conectando múltiples fuentes en una única fuente de verdad.",
+        svc_auto_title:"Automatización de Datos",svc_auto_desc:"Pipelines en Python y SQL que extraen, transforman y cargan datos automáticamente — eliminando trabajo manual y errores.",
+        svc_forecast_title:"Forecasting",svc_forecast_desc:"Modelos predictivos para ingresos, demanda y KPIs usando métodos estadísticos y machine learning.",
+        svc_strategy_title:"Estrategia de Datos",svc_strategy_desc:"Consultoría integral de arquitectura de datos: desde diseño de warehouse hasta capa de reportes y habilitación de equipos.",
+        skills_label:"Tech Stack",skills_title:"Habilidades Técnicas",
+        projects_label:"Portfolio",projects_title:"Proyectos",projects_sub:"Proyectos reales mostrando análisis de datos, automatización y visualización.",
+        proj1_title:"Análisis de Ventas",proj1_desc:"Análisis exploratorio de datos de ventas retail con visualizaciones e insights de negocio.",
+        proj2_title:"Pipeline de Datos SQL",proj2_desc:"Pipeline ETL completo con capas de staging, transformación y reportes para un data warehouse retail.",
+        proj3_title:"Pronóstico de Ingresos",proj3_desc:"Modelo de series temporales para predecir ingresos mensuales con descomposición de tendencia y estacionalidad.",
+        proj4_title:"Dashboard CRM en Power BI",proj4_desc:"Seguimiento semanal del pipeline integrando CRM Dynamics y SQL con actualización automática en Power BI Service.",
+        view_github:"Ver en GitHub",view_live:"Ver Dashboard en Vivo",
+        contact_label:"Contacto",contact_title:"Trabajemos Juntos",contact_text:"¿Tenés un desafío con datos o necesitás ayuda para entender tus números? Hablemos.",
+        contact_info_title:"Información de Contacto",
+        ph_name:"Nombre",ph_email:"Email",ph_message:"Contame sobre tu proyecto...",btn_send:"Enviar Mensaje",
+        msg_fill_all:"Completá todos los campos.",msg_invalid_email:"Email inválido.",
+        msg_opening_mail:"Abriendo tu cliente de correo...",
+        msg_checking_file:"Comprobando archivo...",msg_downloading:"Descargando...",msg_download_started:"Descarga iniciada",
+        msg_cv_not_found:"CV no encontrado (404).",msg_cv_cors:"Error de red o CORS.",msg_cv_error:"Error descargando CV."
       }
+    };
 
-      function applyLang() {
-        document.querySelectorAll('[data-i18n]').forEach(function(el) {
-          var key = el.getAttribute('data-i18n');
-          var val = t(key);
-          if (val) el.innerHTML = val;
-        });
-        document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el) {
-          var key = el.getAttribute('data-i18n-placeholder');
-          var val = t(key);
-          if (val) el.placeholder = val;
-        });
-        document.getElementById('lang-en').classList.toggle('active', currentLang === 'en');
-        document.getElementById('lang-es').classList.toggle('active', currentLang === 'es');
-        document.documentElement.lang = currentLang;
-      }
+    var currentLang = localStorage.getItem('lang') || (navigator.language.startsWith('es') ? 'es' : 'en');
 
-      function setLang(lang) {
-        currentLang = lang;
-        localStorage.setItem('lang', lang);
-        applyLang();
-      }
+    function t(key) {
+      return (translations[currentLang] && translations[currentLang][key]) || translations.en[key] || key;
+    }
 
-      document.addEventListener('DOMContentLoaded', function() {
-        applyLang();
+    function applyLang() {
+      document.querySelectorAll('[data-i18n]').forEach(function(el) {
+        var val = t(el.getAttribute('data-i18n'));
+        if (val) el.innerHTML = val;
+      });
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el) {
+        var val = t(el.getAttribute('data-i18n-placeholder'));
+        if (val) el.placeholder = val;
+      });
+      document.getElementById('lang-en').classList.toggle('active', currentLang === 'en');
+      document.getElementById('lang-es').classList.toggle('active', currentLang === 'es');
+      document.documentElement.lang = currentLang;
+    }
 
-        // ===== TOAST =====
-        var hideToast = function(){};
-        (function() {
-          var to = document.createElement('div');
-          to.className = 'contact-toast';
-          to.innerHTML = '<div class="toast-icon" aria-hidden="true">🔔</div><div class="msg"></div><button class="close" aria-label="Close">×</button>';
-          document.body.appendChild(to);
-          var _msg = to.querySelector('.msg');
-          var _btn = to.querySelector('.close');
-          var _timeout = null;
+    function setLang(lang) {
+      currentLang = lang;
+      localStorage.setItem('lang', lang);
+      applyLang();
+    }
 
-          hideToast = function() { to.classList.remove('show'); };
-          _btn.addEventListener('click', hideToast);
+    document.addEventListener('DOMContentLoaded', function() {
+      applyLang();
 
-          window.showToast = function(text, isError, timeout) {
-            to.classList.remove('success','error');
-            to.classList.add(isError ? 'error' : 'success', 'show');
-            _msg.textContent = text;
-            clearTimeout(_timeout);
-            _timeout = setTimeout(hideToast, timeout || 4000);
-          };
-        })();
+      // Fade-in on scroll
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+      }, { threshold: 0.1 });
+      document.querySelectorAll('.fade-in').forEach(function(el) { observer.observe(el); });
 
-        // ===== CONTACT FORM =====
-        var form = document.getElementById('contact-form');
-        if (form) {
-          var spinner = document.getElementById('contact-spinner');
-          var feedback = document.getElementById('contact-feedback');
-          var submitBtn = document.getElementById('contact-submit');
-          function showMessage(msg, isError) {
-            feedback.textContent = msg;
-            if (msg && window.showToast) window.showToast(msg, isError);
+      // Skill bars animation
+      var skillObs = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) {
+          if (e.isIntersecting) {
+            e.target.querySelectorAll('.skill-fill').forEach(function(bar) {
+              bar.style.width = bar.dataset.width + '%';
+            });
           }
+        });
+      }, { threshold: 0.3 });
+      var skillsSection = document.getElementById('skills');
+      if (skillsSection) skillObs.observe(skillsSection);
 
-          form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            showMessage('', false);
+      // Toast
+      var hideToast = function(){};
+      (function() {
+        var to = document.createElement('div');
+        to.className = 'contact-toast';
+        to.innerHTML = '<div class="msg"></div><button class="close" aria-label="Close">×</button>';
+        document.body.appendChild(to);
+        var _msg = to.querySelector('.msg');
+        var _btn = to.querySelector('.close');
+        var _timeout = null;
+        hideToast = function() { to.classList.remove('show'); };
+        _btn.addEventListener('click', hideToast);
+        window.showToast = function(text, isError, timeout) {
+          to.classList.remove('success','error');
+          to.classList.add(isError ? 'error' : 'success', 'show');
+          _msg.textContent = text;
+          clearTimeout(_timeout);
+          _timeout = setTimeout(hideToast, timeout || 4000);
+        };
+      })();
 
-            var name = (form.name.value || '').trim();
-            var email = (form.email.value || '').trim();
-            var message = (form.message.value || '').trim();
-
-            if (!name || !email || !message) { showMessage(t('msg_fill_all'), true); return; }
-            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showMessage(t('msg_invalid_email'), true); return; }
-
-            var subject = encodeURIComponent('Contact: ' + name);
-            var body = encodeURIComponent(message + '\n\n' + name + '\n' + email);
-            window.location.href = 'mailto:22santistirling@gmail.com?subject=' + subject + '&body=' + body;
-            showMessage(t('msg_opening_mail'), false);
-          });
+      // Contact form
+      var form = document.getElementById('contact-form');
+      if (form) {
+        var feedback = document.getElementById('contact-feedback');
+        function showMessage(msg, isError) {
+          feedback.textContent = msg;
+          if (msg && window.showToast) window.showToast(msg, isError);
         }
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+          showMessage('', false);
+          var name = (form.name.value || '').trim();
+          var email = (form.email.value || '').trim();
+          var message = (form.message.value || '').trim();
+          if (!name || !email || !message) { showMessage(t('msg_fill_all'), true); return; }
+          if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showMessage(t('msg_invalid_email'), true); return; }
+          var subject = encodeURIComponent('Contact: ' + name);
+          var body = encodeURIComponent(message + '\n\n' + name + '\n' + email);
+          window.location.href = 'mailto:22santistirling@gmail.com?subject=' + subject + '&body=' + body;
+          showMessage(t('msg_opening_mail'), false);
+        });
+      }
 
-        // ===== CV DOWNLOAD =====
-        document.querySelectorAll('[data-cv]').forEach(function(link) {
-          link.addEventListener('click', async function(e) {
-            e.preventDefault();
-
-            var cvFb = document.getElementById('cv-feedback') || (function() {
-              var fb = document.createElement('div');
-              fb.id = 'cv-feedback';
-              document.body.appendChild(fb);
-              return fb;
-            })();
-
-            function showCvMsg(msg, isError) {
-              cvFb.textContent = msg;
-              cvFb.style.background = isError ? '#a12d2d' : '#1a7f37';
-              cvFb.style.display = 'block';
-              clearTimeout(cvFb._t);
-              cvFb._t = setTimeout(function(){ cvFb.style.display = 'none'; }, 3500);
-            }
-
-            async function downloadBlob(url, filename) {
-              var res = await fetch(url);
-              if (!res.ok) throw new Error('Download failed ' + res.status);
-              var blob = await res.blob();
-              var blobUrl = URL.createObjectURL(blob);
-              var a = document.createElement('a');
-              a.href = blobUrl;
-              a.download = filename;
-              document.body.appendChild(a);
-              a.click();
-              a.remove();
-              URL.revokeObjectURL(blobUrl);
-            }
-
-            var url = link.getAttribute('href');
-            var filename = link.dataset.filename || url.split('/').pop();
-            showCvMsg(t('msg_checking_file'), false);
-
+      // CV download
+      document.querySelectorAll('[data-cv]').forEach(function(link) {
+        link.addEventListener('click', async function(e) {
+          e.preventDefault();
+          var cvFb = document.getElementById('cv-feedback') || (function() {
+            var fb = document.createElement('div'); fb.id = 'cv-feedback'; document.body.appendChild(fb); return fb;
+          })();
+          function showCvMsg(msg, isError) {
+            cvFb.textContent = msg;
+            cvFb.style.background = isError ? '#a12d2d' : '#1a7f37';
+            cvFb.style.display = 'block';
+            clearTimeout(cvFb._t);
+            cvFb._t = setTimeout(function(){ cvFb.style.display = 'none'; }, 3500);
+          }
+          async function downloadBlob(url, filename) {
+            var res = await fetch(url);
+            if (!res.ok) throw new Error('Download failed ' + res.status);
+            var blob = await res.blob();
+            var blobUrl = URL.createObjectURL(blob);
+            var a = document.createElement('a'); a.href = blobUrl; a.download = filename;
+            document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(blobUrl);
+          }
+          var url = link.getAttribute('href');
+          var filename = link.dataset.filename || url.split('/').pop();
+          showCvMsg(t('msg_checking_file'), false);
+          try {
             try {
-              try {
-                var head = await fetch(url, { method: 'HEAD' });
-                if (head.ok) { showCvMsg(t('msg_downloading'), false); await downloadBlob(url, filename); showCvMsg(t('msg_download_started'), false); return; }
-              } catch(headErr) { console.warn('HEAD failed, trying GET', headErr); }
-              showCvMsg(t('msg_downloading'), false);
-              await downloadBlob(url, filename);
-              showCvMsg(t('msg_download_started'), false);
-            } catch(err) {
-              console.error('CV download error:', err);
-              if (err.message && /404|Not Found/i.test(err.message)) showCvMsg(t('msg_cv_not_found'), true);
-              else if (err instanceof TypeError) showCvMsg(t('msg_cv_cors'), true);
-              else showCvMsg(t('msg_cv_error'), true);
-            }
-          });
+              var head = await fetch(url, { method: 'HEAD' });
+              if (head.ok) { showCvMsg(t('msg_downloading'), false); await downloadBlob(url, filename); showCvMsg(t('msg_download_started'), false); return; }
+            } catch(headErr) { console.warn('HEAD failed', headErr); }
+            showCvMsg(t('msg_downloading'), false);
+            await downloadBlob(url, filename);
+            showCvMsg(t('msg_download_started'), false);
+          } catch(err) {
+            console.error('CV download error:', err);
+            if (/404|Not Found/i.test(err.message)) showCvMsg(t('msg_cv_not_found'), true);
+            else if (err instanceof TypeError) showCvMsg(t('msg_cv_cors'), true);
+            else showCvMsg(t('msg_cv_error'), true);
+          }
         });
       });
-    </script>
+    });
+  </script>
 
-  </body>
+</body>
 </html>
