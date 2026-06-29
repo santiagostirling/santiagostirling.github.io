@@ -9,9 +9,9 @@
 }
 
 .lang-toggle button {
-  background: rgba(0,0,0,0.35);
-  border: 2px solid rgba(255,255,255,0.25);
-  color: rgba(255,255,255,0.75);
+  background: rgba(255,255,255,0.12);
+  border: 2px solid rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.5);
   padding: 5px 12px;
   border-radius: 20px;
   cursor: pointer;
@@ -21,26 +21,29 @@
   font-family: "Source Sans Pro", sans-serif;
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
   backdrop-filter: blur(6px);
+  opacity: 0.6;
 }
 
 .lang-toggle button.active {
-  background: rgba(255,255,255,0.92);
-  color: #1b1f22;
-  border-color: rgba(255,255,255,0.92);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  background: #49bf9d;
+  color: #fff;
+  border-color: #49bf9d;
+  box-shadow: 0 2px 10px rgba(73,191,157,0.4);
+  opacity: 1;
 }
 
 .lang-toggle button:hover:not(.active) {
-  background: rgba(255,255,255,0.2);
-  border-color: rgba(255,255,255,0.5);
-  color: #fff;
+  opacity: 0.85;
+  border-color: rgba(255,255,255,0.4);
 }
 
 .lang-toggle .flag {
-  font-size: 1rem;
-  line-height: 1;
+  width: 18px;
+  height: 13px;
+  border-radius: 2px;
+  flex-shrink: 0;
 }
 
 /* ===== Services Section ===== */
