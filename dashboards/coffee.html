@@ -3,120 +3,38 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Coffee Market Observatory · Interactive dashboard</title>
-<meta name="description" content="Interactive coffee market share dashboard: brands, segments and channels.">
+<title>Coffee Market Observatory · Power BI report · Santiago Stirling</title>
+<meta name="description" content="Coffee market share report: brands, segments, channels and year-over-year change.">
 <meta name="author" content="Santiago Stirling">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Coffee Market Observatory · Interactive dashboard">
-<meta property="og:description" content="Coffee market share dashboard: brands, segments, channels and year-over-year change.">
+<meta property="og:title" content="Coffee Market Observatory · Power BI report">
+<meta property="og:description" content="Coffee market share report: brands, segments, channels and year-over-year change.">
 <meta property="og:url" content="https://santiagostirling.github.io/dashboards/coffee.html">
 <meta property="og:image" content="https://santiagostirling.github.io/images/dashboards/coffee.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" type="image/png" href="assets/logo_coffee.png">
+<link rel="icon" type="image/png" href="logo_coffee.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/dash.css">
+<link rel="stylesheet" href="report.css">
+<style>:root{--hdr:#4A2C1D;--accent:#D9822B;--bg:#F6EFE4}</style>
 </head>
 <body>
-<div id="app"></div>
-<script src="assets/echarts.min.js"></script>
-<script src="assets/dash.js"></script>
-<script>
-var H = DashH, FOCUS = 'Cerro Alto';
-var T = { bg:'#F6EFE4', card:'#FFFDF8', hdr:'#4A2C1D', accent:'#D9822B', fg:'#3A2418', muted:'#7A6555', grid:'#EADFCF',
-          alt:'#F8F1E6', th:'#6B7F3A', value:'#B5562F', radius:'8px', font:"Georgia, 'Times New Roman', serif",
-          colors:['#B5562F','#6B7F3A','#D9A441','#4A2C1D','#C9B79C'] };
-var BRANDS = ['Cerro Alto','Bruma','Molino Azul','Origen Norte','Other brands'];
-var bc = function (b) { return T.colors[BRANDS.indexOf(b)] || T.muted; };
-var SEGS = ['Whole bean','Ground','Capsules'];
-var t_ = function (rows) { return H.sum(rows,'kg') / 1000; };
-var months = function (rows) { return Array.from(new Set(rows.map(function(r){return r.month;}))).sort(function(a,b){return a-b;}); };
-// filas sin el filtro cruzado por marca (para calcular el total de mercado)
-var market = function (c) { return c.cross && c.cross.field === 'brand' ? c.table('sales', { noCross:true }) : c.rows; };
-var marketPrior = function (c) { return c.prior('sales', { noCross: !!(c.cross && c.cross.field === 'brand') }); };
-var share = function (rows, b) { var tot = H.sum(rows,'kg'); return tot ? H.sum(rows.filter(function(r){return r.brand===b;}),'kg') / tot : null; };
-var YEAR = { field:'year', label:'Year', mode:'chips', single:true, required:true, default:2026 };
-
-Dash({
-  brand:'Coffee Market Observatory', logo:'assets/logo_coffee.png', data:'data/coffee.json', theme:T,
-  lastYear:2026, lastMonth:9, sharedSlicers:['year'],
-  pages:[{
-    key:'overview', title:'Market Overview', subtitle:'Coffee Market Observatory · volume and share by brand', fact:'sales',
-    slicers:[YEAR,
-      { field:'segment', label:'Segment', mode:'chips', values:SEGS },
-      { field:'channel', label:'Channel', mode:'select' }],
-    kpis:[
-      { label:'Total market (t)', value:function(c){return t_(market(c));}, format:H.n1 },
-      { label:'Change vs. prior year', value:function(c){var py=t_(marketPrior(c));return py? (t_(market(c))-py)/py:null;},
-        format:function(v){return H.delta(v);}, color:function(v){return v==null?null:v>=0?H.good:H.bad;} },
-      { label:FOCUS+' share', value:function(c){return share(market(c),FOCUS);}, format:function(v){return H.pct(v);} },
-      { label:'Leading brand', value:function(c){var e=H.sortedEntries(H.group(market(c),'brand','kg'));return e.length?e[0][0]:null;}, format:function(v){return v||'–';} }
-    ],
-    visuals:[
-      { title:'Monthly market share by brand', span:7, click:'brand', clickSeries:true, build:function(c,sel,t){
-          var ms=months(c.rows), g=H.groupRows(c.rows,'month');
-          return { legend:{data:BRANDS}, tooltip:{trigger:'axis',valueFormatter:function(v){return H.pct(v);}},
-            xAxis:{type:'category',data:ms.map(function(m){return H.MONTHS[m-1];}),axisTick:{show:false},axisLine:{lineStyle:{color:t.grid}},axisLabel:{color:t.muted}},
-            yAxis:{type:'value',max:1,axisLabel:{color:t.muted,formatter:function(v){return Math.round(v*100)+'%';}},splitLine:{lineStyle:{color:t.grid,type:'dashed'}}},
-            series:BRANDS.map(function(b){return {name:b,type:'bar',stack:'s',barMaxWidth:34,
-              itemStyle:{color:sel==null||sel===b?bc(b):bc(b)+'40'},
-              data:ms.map(function(m){return share(g.get(m)||[],b);})};})};
-        }},
-      { title:'Volume by brand (t)', span:5, click:'brand', build:function(c,sel,t){
-          var e=H.sortedEntries(H.group(c.rows,'brand','kg'));
-          return H.bar(t, e.map(function(x){return x[0];}), e.map(function(x){return x[1]/1000;}), {sel:sel, colorBy:bc, fmt:H.n1});
-        }},
-      { title:'Monthly volume vs. prior year (t)', span:7, build:function(c,sel,t){
-          var ms=months(c.rows), cur=H.group(c.rows,'month','kg'), py=H.group(c.prior(),'month','kg');
-          return H.lines(t, ms.map(function(m){return H.MONTHS[m-1];}), [
-            {name:'Selected year', data:ms.map(function(m){return +((cur.get(m)||0)/1000).toFixed(1);}), color:t.colors[0]},
-            {name:'Prior year', data:ms.map(function(m){return py.has(m)? +((py.get(m))/1000).toFixed(1):null;}), color:t.colors[1]}], {scale:true, fmt:H.n1});
-        }},
-      { title:'Segment mix', span:5, click:'segment', build:function(c,sel,t){
-          var g=H.group(c.rows,'segment','kg');
-          return H.donut(t, SEGS.filter(function(s){return g.has(s);}).map(function(s){return [s,g.get(s)/1000];}),
-            {sel:sel, fmt:H.n1, colorBy:function(k,i){return [t.colors[0],t.colors[1],t.colors[2]][SEGS.indexOf(k)];}});
-        }}
-    ]
-  },{
-    key:'brands', title:'Brands & Segments', subtitle:'Coffee Market Observatory · focus on '+FOCUS, fact:'sales',
-    slicers:[YEAR,
-      { field:'channel', label:'Channel', mode:'chips' },
-      { field:'origin', label:'Brand origin', mode:'select' }],
-    kpis:[
-      { label:'Prior-year market (t)', value:function(c){return t_(marketPrior(c));}, format:H.n1 },
-      { label:'Total market (t)', value:function(c){return t_(market(c));}, format:H.n1 },
-      { label:FOCUS+' share', value:function(c){return share(market(c),FOCUS);}, format:function(v){return H.pct(v);} },
-      { label:'Share change vs. prior year', value:function(c){var a=share(market(c),FOCUS), b=share(marketPrior(c),FOCUS);return a!=null&&b!=null?(a-b)*100:null;},
-        format:function(v){return H.delta(v,'pp');}, color:function(v){return v==null?null:v>=0?H.good:H.bad;} }
-    ],
-    visuals:[
-      { title:'Market share by brand and segment', span:6, type:'table', click:'brand', build:function(c,sel){
-          var rows=[], tot=H.sum(c.rows,'kg'), segTot={};
-          SEGS.forEach(function(s){segTot[s]=H.sum(c.rows.filter(function(r){return r.segment===s;}),'kg');});
-          BRANDS.forEach(function(b){var rb=c.rows.filter(function(r){return r.brand===b;}); if(!rb.length) return;
-            rows.push({key:b, cells:['<span style="color:'+bc(b)+'">●</span> '+b].concat(SEGS.map(function(s){
-              return segTot[s]? H.pct(H.sum(rb.filter(function(r){return r.segment===s;}),'kg')/segTot[s]):'–';}),['<b>'+H.pct(H.sum(rb,'kg')/tot)+'</b>'])});});
-          rows.push({cls:'tot', cells:['Total'].concat(SEGS.map(function(){return '100.0%';}),['100.0%'])});
-          return H.table(['Brand'].concat(SEGS,['Total']), rows, {sel:sel});
-        }},
-      { title:'Volume by channel and brand (t)', span:6, click:'brand', clickSeries:true, build:function(c,sel,t){
-          var chs=H.distinct(c.all('sales'),'channel').sort();
-          return { legend:{data:BRANDS}, tooltip:{trigger:'axis',valueFormatter:H.n1},
-            xAxis:{type:'category',data:chs,axisTick:{show:false},axisLine:{lineStyle:{color:t.grid}},axisLabel:{color:t.muted}},
-            yAxis:{type:'value',axisLabel:{color:t.muted},splitLine:{lineStyle:{color:t.grid,type:'dashed'}}},
-            series:BRANDS.map(function(b){return {name:b,type:'bar',barMaxWidth:22,itemStyle:{color:sel==null||sel===b?bc(b):bc(b)+'40',borderRadius:[3,3,0,0]},
-              data:chs.map(function(ch){return +(H.sum(c.rows.filter(function(r){return r.brand===b&&r.channel===ch;}),'kg')/1000).toFixed(1);})};})};
-        }},
-      { title:'Market share trend by brand', span:12, height:280, click:'brand', clickSeries:true, build:function(c,sel,t){
-          var rows=market(c), ms=months(rows), g=H.groupRows(rows,'month');
-          var o=H.lines(t, ms.map(function(m){return H.MONTHS[m-1];}), BRANDS.map(function(b){
-            return {name:b, color:sel==null||sel===b?bc(b):bc(b)+'40', data:ms.map(function(m){var v=share(g.get(m)||[],b);return v==null?null:+v.toFixed(4);})};}), {pct:true, fmt:function(v){return H.pct(v);}});
-          o.legend={data:BRANDS}; return o;
-        }}
-    ]
-  }]
-});
-</script>
+<header class="top">
+  <div class="top-in">
+    <img class="logo" src="logo_coffee.png" alt="">
+    <div class="titles"><h1>Coffee Market Observatory</h1><p>Market research · Power BI report</p></div>
+    <nav class="links">
+      <a class="btn" href="https://app.powerbi.com/view?r=eyJrIjoiMDAyZDE2ZTEtNGQ0Yy00ZTAzLTg1YTktYWMxMzQ3NDdmNGI1IiwidCI6Ijc3MTIyZDNiLTE2MWEtNDBkYS05M2E1LWZlODcyMjlkNmVlMCIsImMiOjR9" target="_blank" rel="noopener noreferrer">Open full screen ↗</a>
+      <a class="back" href="../index.html#dashboards">← Portfolio</a>
+    </nav>
+  </div>
+</header>
+<main class="wrap">
+  <div class="frame">
+    <iframe title="Coffee Market Observatory" src="https://app.powerbi.com/view?r=eyJrIjoiMDAyZDE2ZTEtNGQ0Yy00ZTAzLTg1YTktYWMxMzQ3NDdmNGI1IiwidCI6Ijc3MTIyZDNiLTE2MWEtNDBkYS05M2E1LWZlODcyMjlkNmVlMCIsImMiOjR9" allowfullscreen loading="lazy"></iframe>
+  </div>
+  <p class="hint">Use the page tabs at the bottom of the report to switch pages · On mobile, rotate your phone or use “Open full screen”.</p>
+</main>
+<footer class="foot">Power BI report with sample data · built by <a href="../index.html">Santiago Stirling</a> · <a href="../index.html#contact">Hire me</a></footer>
 </body>
 </html>

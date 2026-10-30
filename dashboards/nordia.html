@@ -3,122 +3,38 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Nordia Cold Chain · Interactive dashboard</title>
-<meta name="description" content="Interactive cold-chain logistics dashboard: shipment operations and delivery performance.">
+<title>Nordia Cold Chain · Power BI report · Santiago Stirling</title>
+<meta name="description" content="Cold-chain logistics report: shipment operations, alerts, fill rate and delivered volume.">
 <meta name="author" content="Santiago Stirling">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Nordia Cold Chain · Interactive dashboard">
-<meta property="og:description" content="Cold-chain logistics dashboard: shipment operations, alerts, fill rate and volume.">
+<meta property="og:title" content="Nordia Cold Chain · Power BI report">
+<meta property="og:description" content="Cold-chain logistics report: shipment operations, alerts, fill rate and delivered volume.">
 <meta property="og:url" content="https://santiagostirling.github.io/dashboards/nordia.html">
 <meta property="og:image" content="https://santiagostirling.github.io/images/dashboards/nordia.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" type="image/png" href="assets/logo_nordia.png">
+<link rel="icon" type="image/png" href="logo_nordia.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/dash.css">
+<link rel="stylesheet" href="report.css">
+<style>:root{--hdr:#0B3C49;--accent:#0E9AA7;--bg:#EAF2F6}</style>
 </head>
 <body>
-<div id="app"></div>
-<script src="assets/echarts.min.js"></script>
-<script src="assets/dash.js"></script>
-<script>
-var H = DashH;
-var T = { bg:'#EAF2F6', card:'#FFFFFF', hdr:'#0B3C49', accent:'#0E9AA7', fg:'#10242E', muted:'#5A6B75', grid:'#D5E3EA',
-          alt:'#F3F8FA', th:'#0B3C49', value:'#0E9AA7', radius:'12px',
-          colors:['#0E9AA7','#F59E0B','#3B6FD8','#E8590C','#6366F1','#14B8A6','#E11D48','#5A6B75'] };
-var monthAxis = function (rows) {
-  var keys = Array.from(new Set(rows.map(function (r) { return r.year * 100 + r.month; }))).sort();
-  return { keys: keys, labels: keys.map(function (k) { return H.MONTHS[k % 100 - 1] + ' ' + String(Math.floor(k / 100)).slice(2); }) };
-};
-var ym = function (r) { return r.year * 100 + r.month; };
-var YEAR = { field:'year', label:'Year', mode:'chips', single:true, default:2026 };
-
-Dash({
-  brand:'Nordia Cold Chain', logo:'assets/logo_nordia.png', data:'data/nordia.json', theme:T,
-  lastYear:2026, lastMonth:9, sharedSlicers:['year'],
-  pages:[{
-    key:'operations', title:'Shipment Operations', subtitle:'Nordia Cold Chain · cold chain monitoring', fact:'shipments',
-    slicers:[YEAR,
-      { field:'supplier', label:'Supplier', mode:'select' },
-      { field:'channel', label:'Channel', mode:'chips' },
-      { field:'status', label:'Status', mode:'select' }],
-    kpis:[
-      { label:'Shipments', value:function(c){return c.rows.length;}, format:H.n0 },
-      { label:'% integrated via API', value:function(c){return c.rows.length? c.rows.filter(function(r){return r.channel==='API';}).length/c.rows.length:null;}, format:function(v){return H.pct(v);} },
-      { label:'% of shipments with alerts', value:function(c){return c.rows.length? c.rows.filter(function(r){return r.alert;}).length/c.rows.length:null;},
-        format:function(v){return H.pct(v);}, color:function(v){return v>0.2?H.bad:v>0.15?H.warn:H.good;} },
-      { label:'Average hours to close', value:function(c){return c.rows.length? H.sum(c.rows,'hours')/c.rows.length:null;}, format:H.n1 }
-    ],
-    visuals:[
-      { title:'Monthly shipments and % with alerts', span:7, build:function(c,sel,t){
-          var ax=monthAxis(c.rows), g=H.groupRows(c.rows,ym);
-          var cnt=ax.keys.map(function(k){return (g.get(k)||[]).length;});
-          var pa=ax.keys.map(function(k){var rs=g.get(k)||[];return rs.length? rs.filter(function(r){return r.alert;}).length/rs.length:null;});
-          return { legend:{data:['Shipments','% with alert']},
-            xAxis:{type:'category',data:ax.labels,axisTick:{show:false},axisLine:{lineStyle:{color:t.grid}},axisLabel:{color:t.muted,fontSize:11}},
-            yAxis:[{type:'value',splitLine:{lineStyle:{color:t.grid,type:'dashed'}},axisLabel:{color:t.muted}},
-                   {type:'value',splitLine:{show:false},axisLabel:{color:t.muted,formatter:function(v){return Math.round(v*100)+'%';}}}],
-            tooltip:{trigger:'axis'},
-            series:[{name:'Shipments',type:'bar',data:cnt,barMaxWidth:30,itemStyle:{color:t.colors[0],borderRadius:[4,4,0,0]}},
-                    {name:'% with alert',type:'line',yAxisIndex:1,smooth:true,data:pa,symbol:'circle',symbolSize:6,
-                     itemStyle:{color:t.colors[1]},lineStyle:{width:2.5,color:t.colors[1]},tooltip:{valueFormatter:function(v){return H.pct(v);}}}]};
-        }},
-      { title:'Shipments by channel', span:5, click:'channel', build:function(c,sel,t){
-          return H.donut(t, H.sortedEntries(H.group(c.rows,'channel')), {sel:sel, colorBy:function(k){return k==='API'?t.colors[0]:t.colors[1];}});
-        }},
-      { title:'Shipments by supplier', span:6, click:'supplier', height:270, build:function(c,sel,t){
-          var e=H.sortedEntries(H.group(c.rows,'supplier'));
-          return H.bar(t, e.map(function(x){return x[0];}), e.map(function(x){return x[1];}), {sel:sel});
-        }},
-      { title:'Alert reasons', span:6, click:'alert', height:270, build:function(c,sel,t){
-          var e=H.sortedEntries(H.group(c.rows.filter(function(r){return r.alert;}),'alert'));
-          return H.bar(t, e.map(function(x){return x[0];}), e.map(function(x){return x[1];}), {sel:sel, color:'#E8590C'});
-        }}
-    ]
-  },{
-    key:'deliveries', title:'Deliveries & Volume', subtitle:'Nordia Cold Chain · kg ordered vs. delivered', fact:'deliveries',
-    slicers:[YEAR,
-      { field:'region', label:'Region', mode:'select' },
-      { field:'ctype', label:'Customer type', mode:'select' },
-      { field:'storage', label:'Storage', mode:'chips' }],
-    kpis:[
-      { label:'Kg delivered', value:function(c){return H.sum(c.rows,'kgDel');}, format:function(v){return H.compact(v);} },
-      { label:'Fill rate (kg)', value:function(c){var o=H.sum(c.rows,'kgOrd');return o? H.sum(c.rows,'kgDel')/o:null;},
-        format:function(v){return H.pct(v);}, color:function(v){return v>=0.98?H.good:v>=0.95?H.warn:H.bad;} },
-      { label:'Shrinkage (kg)', value:function(c){return H.sum(c.rows,'kgOrd')-H.sum(c.rows,'kgDel');}, format:H.n0 },
-      { label:'Customers served', value:function(c){return H.distinct(c.rows,'customer').length;}, format:H.n0 }
-    ],
-    visuals:[
-      { title:'Kg ordered vs. delivered by month', span:7, build:function(c,sel,t){
-          var ax=monthAxis(c.rows), go=H.group(c.rows,ym,'kgOrd'), gd=H.group(c.rows,ym,'kgDel');
-          return H.lines(t, ax.labels, [
-            {name:'Kg ordered', data:ax.keys.map(function(k){return Math.round(go.get(k)||0);}), color:t.colors[0]},
-            {name:'Kg delivered', data:ax.keys.map(function(k){return Math.round(gd.get(k)||0);}), color:t.colors[1]}], {scale:true});
-        }},
-      { title:'Kg delivered by category', span:5, click:'category', build:function(c,sel,t){
-          var e=H.sortedEntries(H.group(c.rows,'category','kgDel'));
-          return H.bar(t, e.map(function(x){return x[0];}), e.map(function(x){return Math.round(x[1]);}), {sel:sel, labelFmt:function(v){return H.compact(v);}});
-        }},
-      { title:'Kg delivered by region and customer type', span:7, type:'table', click:'region', build:function(c,sel){
-          var types=H.distinct(c.all('deliveries'),'ctype').sort(), g=H.groupRows(c.rows,'region');
-          var regs=Array.from(g.keys()).sort(), rows=[];
-          regs.forEach(function(rg){var rs=g.get(rg), gt=H.group(rs,'ctype','kgDel');
-            rows.push({key:rg, cells:[rg].concat(types.map(function(tp){var v=gt.get(tp);return v?H.n0(v):'';}), ['<b>'+H.n0(H.sum(rs,'kgDel'))+'</b>'])});});
-          var gt=H.group(c.rows,'ctype','kgDel');
-          rows.push({cls:'tot', cells:['Total'].concat(types.map(function(tp){return H.n0(gt.get(tp)||0);}),[H.n0(H.sum(c.rows,'kgDel'))])});
-          return H.table(['Region'].concat(types,['Total']), rows, {sel:sel});
-        }},
-      { title:'Product ranking', span:5, type:'table', click:'product', build:function(c,sel){
-          var g=H.groupRows(c.rows,'product');
-          var e=Array.from(g.entries()).map(function(x){return [x[0],H.sum(x[1],'kgDel'),H.sum(x[1],'kgOrd')];}).sort(function(a,b){return b[1]-a[1];});
-          var rows=e.map(function(x){return {key:x[0], cells:[x[0],H.n0(x[1]),H.pct(x[1]/x[2])]};});
-          var o=H.sum(c.rows,'kgOrd'), d=H.sum(c.rows,'kgDel');
-          rows.push({cls:'tot', cells:['Total',H.n0(d),H.pct(o?d/o:null)]});
-          return H.table(['Product','Kg delivered','Fill rate'], rows, {sel:sel});
-        }}
-    ]
-  }]
-});
-</script>
+<header class="top">
+  <div class="top-in">
+    <img class="logo" src="logo_nordia.png" alt="">
+    <div class="titles"><h1>Nordia Cold Chain</h1><p>Cold chain logistics · Power BI report</p></div>
+    <nav class="links">
+      <a class="btn" href="https://app.powerbi.com/view?r=eyJrIjoiNzQ2ZmY0YmYtNjEyOS00NjBkLTk2MDgtOGY1N2Y0MzIyNzk4IiwidCI6Ijc3MTIyZDNiLTE2MWEtNDBkYS05M2E1LWZlODcyMjlkNmVlMCIsImMiOjR9" target="_blank" rel="noopener noreferrer">Open full screen ↗</a>
+      <a class="back" href="../index.html#dashboards">← Portfolio</a>
+    </nav>
+  </div>
+</header>
+<main class="wrap">
+  <div class="frame">
+    <iframe title="Nordia Cold Chain" src="https://app.powerbi.com/view?r=eyJrIjoiNzQ2ZmY0YmYtNjEyOS00NjBkLTk2MDgtOGY1N2Y0MzIyNzk4IiwidCI6Ijc3MTIyZDNiLTE2MWEtNDBkYS05M2E1LWZlODcyMjlkNmVlMCIsImMiOjR9" allowfullscreen loading="lazy"></iframe>
+  </div>
+  <p class="hint">Use the page tabs at the bottom of the report to switch pages · On mobile, rotate your phone or use “Open full screen”.</p>
+</main>
+<footer class="foot">Power BI report with sample data · built by <a href="../index.html">Santiago Stirling</a> · <a href="../index.html#contact">Hire me</a></footer>
 </body>
 </html>
