@@ -3,9 +3,18 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Santiago Stirling | Data & Analytics Consultant</title>
-  <meta name="description" content="Data & Analytics Consultant specializing in Power BI, SQL, and Python. I help companies turn raw data into actionable insights."/>
-  <link rel="icon" type="image/png" href="images/foto_cv.png"/>
+  <title>Santiago Stirling | Power BI Developer & Financial Data Analyst</title>
+  <meta name="description" content="Power BI developer and financial data analyst. Interactive dashboards, data modeling, DAX and financial reporting — built by an accountant who understands your numbers."/>
+  <meta name="theme-color" content="#0b0d13"/>
+  <link rel="canonical" href="https://santiagostirling.github.io/"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://santiagostirling.github.io/"/>
+  <meta property="og:title" content="Santiago Stirling | Power BI Developer & Financial Data Analyst"/>
+  <meta property="og:description" content="Explore three interactive dashboards: cold-chain logistics, coffee market share and travel-agency sales."/>
+  <meta property="og:image" content="https://santiagostirling.github.io/images/og-image.jpg"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <link rel="icon" type="image/png" href="images/favicon.png"/>
+  <link rel="apple-touch-icon" href="images/favicon.png"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="assets/css/fontawesome-all.min.css"/>
@@ -38,7 +47,7 @@
     .lang-toggle .flag{width:16px;height:11px;border-radius:2px;flex-shrink:0}
 
     /* ===== HERO ===== */
-    .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;padding:120px 32px 80px;overflow:hidden}
+    .hero{min-height:88vh;display:flex;align-items:center;justify-content:center;position:relative;padding:120px 32px 80px;overflow:hidden}
     .hero::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(ellipse at 30% 50%,rgba(73,191,157,0.08) 0%,transparent 50%),radial-gradient(ellipse at 70% 30%,rgba(59,130,246,0.05) 0%,transparent 50%);animation:aurora 15s ease-in-out infinite alternate}
     @keyframes aurora{0%{transform:translate(0,0) rotate(0deg)}100%{transform:translate(-3%,2%) rotate(3deg)}}
     .hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse at center,black 30%,transparent 70%)}
@@ -87,18 +96,29 @@
     .skill-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:2px;transition:width 1.2s cubic-bezier(.25,.8,.25,1)}
     .skill-tags{font-size:.75rem;color:var(--text-dim);margin-top:4px}
 
-    /* ===== PROJECTS ===== */
-    .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
-    .project-card{background:var(--glass);border:1px solid var(--glass-border);border-radius:var(--radius);overflow:hidden;transition:all .3s}
-    .project-card:hover{border-color:rgba(73,191,157,0.2);transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,0.3)}
-    .project-img{width:100%;height:180px;object-fit:contain;background:var(--bg2);padding:12px}
-    .project-body{padding:20px 22px 24px}
-    .project-body h3{font-size:1rem;font-weight:600;color:var(--white);margin-bottom:10px}
-    .project-body p{font-size:.85rem;color:var(--text-dim);line-height:1.6;margin-bottom:14px}
-    .tech-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+    /* ===== DASHBOARDS ===== */
+    .dash-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+    .dash-card{background:var(--glass);border:1px solid var(--glass-border);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;transition:all .3s}
+    .dash-card:hover{border-color:rgba(73,191,157,0.25);transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,0.35)}
+    .dash-thumb{display:block;position:relative;aspect-ratio:16/9;overflow:hidden;background:var(--bg2)}
+    .dash-thumb img{width:100%;height:100%;object-fit:cover;object-position:top left;transition:transform .5s}
+    .dash-card:hover .dash-thumb img{transform:scale(1.04)}
+    .dash-thumb .live{position:absolute;top:10px;left:10px;background:rgba(11,13,19,.78);color:var(--white);font-size:.7rem;font-weight:600;padding:4px 10px;border-radius:999px;letter-spacing:.04em;backdrop-filter:blur(6px)}
+    .dash-thumb .live::before{content:'';display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--accent);margin-right:6px;box-shadow:0 0 8px var(--accent)}
+    .dash-body{padding:20px 22px 22px;display:flex;flex-direction:column;flex:1}
+    .dash-industry{font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+    .dash-body h3{font-size:1.05rem;font-weight:700;color:var(--white);margin-bottom:8px;line-height:1.35}
+    .dash-body p{font-size:.85rem;color:var(--text-dim);line-height:1.6;margin-bottom:14px}
+    .dash-pages{list-style:none;margin:0 0 16px;display:flex;flex-direction:column;gap:6px}
+    .dash-pages li{font-size:.8rem;color:var(--text);display:flex;gap:8px;align-items:baseline}
+    .dash-pages li i{color:var(--accent);font-size:.7rem}
+    .tech-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
     .tech-tags span{background:rgba(73,191,157,0.12);color:var(--accent);padding:3px 10px;border-radius:6px;font-size:.72rem;font-weight:600}
-    .project-link{display:inline-flex;align-items:center;gap:6px;font-size:.85rem;font-weight:500;color:var(--accent)}
-    .project-link:hover{color:var(--white)}
+    .dash-actions{margin-top:auto;display:flex;gap:10px;flex-wrap:wrap}
+    .dash-actions .btn{padding:10px 18px;font-size:.82rem}
+    .dash-note{text-align:center;color:var(--text-dim);font-size:.8rem;margin-top:28px}
+    @media(max-width:980px){.dash-grid{grid-template-columns:1fr 1fr}}
+    @media(max-width:640px){.dash-grid{grid-template-columns:1fr}}
 
     /* ===== CONTACT ===== */
     .contact-section{background:var(--bg2);border-top:1px solid var(--glass-border)}
@@ -133,6 +153,23 @@
     #cv-feedback{position:fixed;right:16px;bottom:64px;display:none;padding:8px 12px;border-radius:6px;color:#fff;font-size:.9rem;z-index:1300}
     #contact-feedback{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
 
+    /* ===== ABOUT STRIP ===== */
+    .hero-role{display:inline-block;font-size:.8rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);background:rgba(73,191,157,0.1);border:1px solid rgba(73,191,157,0.25);padding:6px 14px;border-radius:999px;margin-bottom:18px}
+    .creds{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:1100px;margin:0 auto;padding:0 32px}
+    .cred{display:flex;gap:14px;align-items:flex-start;background:var(--glass);border:1px solid var(--glass-border);border-radius:var(--radius);padding:20px}
+    .cred i{width:40px;height:40px;flex:none;border-radius:10px;background:rgba(73,191,157,0.1);color:var(--accent);display:flex;align-items:center;justify-content:center}
+    .cred h3{font-size:.92rem;color:var(--white);font-weight:600;margin-bottom:4px}
+    .cred p{font-size:.8rem;color:var(--text-dim);line-height:1.5}
+    section[id]{scroll-margin-top:72px}
+    a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+    /* ===== MOBILE MENU ===== */
+    .menu-btn{display:none;background:var(--glass);border:1px solid var(--glass-border);color:var(--white);width:38px;height:34px;border-radius:8px;font-size:1rem;cursor:pointer}
+    .mobile-menu{display:none;position:fixed;top:58px;left:12px;right:12px;z-index:99;background:var(--bg2);border:1px solid var(--glass-border);border-radius:12px;padding:8px;box-shadow:0 16px 40px rgba(0,0,0,.5)}
+    .mobile-menu.open{display:flex;flex-direction:column}
+    .mobile-menu a{padding:12px 14px;color:var(--white);font-weight:500;border-radius:8px}
+    .mobile-menu a:hover{background:var(--glass)}
+
     /* ===== FADE IN ===== */
     .fade-in{opacity:0;transform:translateY(30px);transition:opacity .7s,transform .7s}
     .fade-in.visible{opacity:1;transform:translateY(0)}
@@ -146,11 +183,17 @@
       .section{padding:64px 20px}
       .contact-grid{grid-template-columns:1fr}
       .contact-form .form-row{grid-template-columns:1fr}
-      .hero-cta{flex-direction:column;align-items:center}
+      .hero-cta{flex-direction:column;align-items:stretch;max-width:300px;margin:0 auto}
+      .hero-cta .btn{justify-content:center}
+      .menu-btn{display:inline-flex;align-items:center;justify-content:center}
+      .creds{grid-template-columns:1fr;padding:0 20px}
     }
     @media(max-width:480px){
-      .hero-stats{flex-direction:column;gap:16px}
-      .services-grid,.skills-grid,.projects-grid{grid-template-columns:1fr}
+      .hero-stats{gap:18px}
+      .stat-number{font-size:1.5rem}
+      .stat-label{font-size:.62rem;line-height:1.35;display:block;margin-top:4px}
+      .hero-role{font-size:.66rem;letter-spacing:.04em;padding:6px 12px}
+      .services-grid,.skills-grid{grid-template-columns:1fr}
     }
   </style>
 </head>
@@ -160,10 +203,11 @@
   <nav class="nav">
     <div class="nav-logo">Santiago<span>.</span></div>
     <div class="nav-links">
+      <a href="#dashboards" data-i18n="nav_dashboards">Dashboards</a>
       <a href="#services" data-i18n="nav_services">Services</a>
       <a href="#skills" data-i18n="nav_skills">Skills</a>
       <a href="#contact" data-i18n="nav_contact">Contact</a>
-      <div class="lang-toggle">
+      <div class="lang-toggle" role="group" aria-label="Language">
         <button id="lang-en" class="active" onclick="setLang('en')">
           <svg class="flag" viewBox="0 0 60 30" xmlns="http://www.w3.org/2000/svg"><clipPath id="s"><path d="M0,0 v30 h60 v-30 z"/></clipPath><clipPath id="t2"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"/></clipPath><g clip-path="url(#s)"><path d="M0,0 v30 h60 v-30 z" fill="#012169"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"/><path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#t2)" stroke="#C8102E" stroke-width="4"/><path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10"/><path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/></g></svg>
           EN
@@ -173,18 +217,27 @@
           ES
         </button>
       </div>
+      <button class="menu-btn" id="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu"><i class="fas fa-bars"></i></button>
     </div>
   </nav>
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="#dashboards" data-i18n="nav_dashboards">Dashboards</a>
+    <a href="#services" data-i18n="nav_services">Services</a>
+    <a href="#skills" data-i18n="nav_skills">Skills</a>
+    <a href="#contact" data-i18n="nav_contact">Contact</a>
+  </div>
 
   <!-- Hero -->
   <section class="hero">
     <div class="hero-grid"></div>
     <div class="hero-content">
-      <img src="images/foto_cv.png" alt="Santiago Stirling" class="hero-avatar"/>
+      <img src="images/profile.jpg" alt="Santiago Stirling" class="hero-avatar" width="120" height="120"/>
+      <div class="hero-role" data-i18n="hero_role">Power BI Developer · Financial Data Analyst</div>
       <h1>Santiago <span>Stirling</span></h1>
-      <p class="hero-subtitle" data-i18n="hero_subtitle">I help companies turn data into decisions</p>
+      <p class="hero-subtitle" data-i18n="hero_subtitle">I build Power BI dashboards that turn scattered data into clear decisions — with the eye of an accountant who understands your numbers.</p>
       <div class="hero-cta">
-        <a href="#contact" class="btn btn-primary" data-i18n="btn_hire">Hire Me</a>
+        <a href="#dashboards" class="btn btn-primary" data-i18n="btn_dash">Explore my dashboards</a>
+        <a href="#contact" class="btn btn-outline" data-i18n="btn_hire">Hire Me</a>
         <a href="./assets/docs/Santiago_Stirling_CV.pdf" class="btn btn-outline" data-cv data-filename="Santiago_Stirling_CV.pdf" target="_blank" rel="noopener noreferrer" data-i18n="download_cv">Download CV</a>
       </div>
       <div class="hero-stats">
@@ -195,33 +248,100 @@
     </div>
   </section>
 
+  <!-- Credentials -->
+  <div class="creds fade-in" aria-label="Credentials">
+    <div class="cred"><i class="fas fa-calculator"></i><div><h3 data-i18n="cred1_t">Accountant by training</h3><p data-i18n="cred1_d">Bachelor of Accountancy (Universidad de la República) — I speak the language of CFOs and controllers.</p></div></div>
+    <div class="cred"><i class="fas fa-graduation-cap"></i><div><h3 data-i18n="cred2_t">MSc Business Analytics</h3><p data-i18n="cred2_d">Universidad ORT Uruguay, plus a Master's degree in Artificial Intelligence (Universidad de Palermo).</p></div></div>
+    <div class="cred"><i class="fas fa-certificate"></i><div><h3 data-i18n="cred3_t">Power BI certified</h3><p data-i18n="cred3_d">Microsoft PL-300: Power BI Data Analyst. Building BI solutions for clients since 2022.</p></div></div>
+  </div>
+
+  <!-- Dashboards -->
+  <section class="section fade-in" id="dashboards">
+    <div class="section-header">
+      <span class="section-label" data-i18n="dash_label">Portfolio</span>
+      <h2 data-i18n="dash_title">Interactive Dashboards</h2>
+      <p data-i18n="dash_sub">Three Power BI reports from different industries, rebuilt for the web. Open any of them, filter and click around.</p>
+    </div>
+    <div class="dash-grid">
+      <article class="dash-card">
+        <a class="dash-thumb" href="dashboards/nordia.html"><img src="images/dashboards/nordia.jpg" alt="Nordia Cold Chain dashboard preview" loading="lazy"/><span class="live" data-i18n="live">Live demo</span></a>
+        <div class="dash-body">
+          <div class="dash-industry" data-i18n="dash1_ind">Cold chain logistics</div>
+          <h3>Nordia Cold Chain</h3>
+          <p data-i18n="dash1_desc">Monitors shipment operations and delivery performance for a cold-chain distributor.</p>
+          <ul class="dash-pages">
+            <li><i class="fas fa-chart-area"></i><span><b>Shipment Operations</b> — <span data-i18n="dash1_p1">volume, API adoption, alert rate, closing time</span></span></li>
+            <li><i class="fas fa-chart-area"></i><span><b>Deliveries &amp; Volume</b> — <span data-i18n="dash1_p2">kg ordered vs. delivered, fill rate, shrinkage</span></span></li>
+          </ul>
+          <div class="tech-tags"><span>Power BI</span><span>DAX</span><span>Star schema</span><span>KPI alerts</span></div>
+          <div class="dash-actions">
+            <a class="btn btn-primary" href="dashboards/nordia.html"><i class="fas fa-play"></i> <span data-i18n="btn_explore">Explore live</span></a>
+          </div>
+        </div>
+      </article>
+      <article class="dash-card">
+        <a class="dash-thumb" href="dashboards/coffee.html"><img src="images/dashboards/coffee.jpg" alt="Coffee Market Observatory dashboard preview" loading="lazy"/><span class="live" data-i18n="live">Live demo</span></a>
+        <div class="dash-body">
+          <div class="dash-industry" data-i18n="dash2_ind">Market research</div>
+          <h3>Coffee Market Observatory</h3>
+          <p data-i18n="dash2_desc">Tracks market share for five coffee brands across segments and sales channels.</p>
+          <ul class="dash-pages">
+            <li><i class="fas fa-chart-area"></i><span><b>Market Overview</b> — <span data-i18n="dash2_p1">market size, YoY change, monthly share by brand</span></span></li>
+            <li><i class="fas fa-chart-area"></i><span><b>Brands &amp; Segments</b> — <span data-i18n="dash2_p2">share by segment and channel, change in pp</span></span></li>
+          </ul>
+          <div class="tech-tags"><span>Power BI</span><span>Time intelligence</span><span>Market share</span><span>YoY</span></div>
+          <div class="dash-actions">
+            <a class="btn btn-primary" href="dashboards/coffee.html"><i class="fas fa-play"></i> <span data-i18n="btn_explore">Explore live</span></a>
+          </div>
+        </div>
+      </article>
+      <article class="dash-card">
+        <a class="dash-thumb" href="dashboards/travessa.html"><img src="images/dashboards/travessa.jpg" alt="Travessa Travel dashboard preview" loading="lazy"/><span class="live" data-i18n="live">Live demo</span></a>
+        <div class="dash-body">
+          <div class="dash-industry" data-i18n="dash3_ind">Travel &amp; sales</div>
+          <h3>Travessa Travel</h3>
+          <p data-i18n="dash3_desc">Covers sales performance, profitability, targets and the commercial pipeline of a travel agency.</p>
+          <ul class="dash-pages">
+            <li><i class="fas fa-chart-area"></i><span><b>Sales &amp; Profitability</b> — <span data-i18n="dash3_p1">sales, margin, target attainment by agent</span></span></li>
+            <li><i class="fas fa-chart-area"></i><span><b>Sales Pipeline</b> — <span data-i18n="dash3_p2">quotes by stage, win rate, weighted pipeline</span></span></li>
+          </ul>
+          <div class="tech-tags"><span>Power BI</span><span>DAX</span><span>Targets</span><span>Pipeline</span></div>
+          <div class="dash-actions">
+            <a class="btn btn-primary" href="dashboards/travessa.html"><i class="fas fa-play"></i> <span data-i18n="btn_explore">Explore live</span></a>
+          </div>
+        </div>
+      </article>
+    </div>
+    <p class="dash-note" data-i18n="dash_note">Built with sample data · Original reports developed in Power BI Desktop</p>
+  </section>
+
   <!-- Services -->
   <section class="section fade-in" id="services">
     <div class="section-header">
       <span class="section-label" data-i18n="services_label">What I Do</span>
       <h2 data-i18n="services_title">Services</h2>
-      <p data-i18n="services_sub">End-to-end data solutions, from raw data to strategic insights.</p>
+      <p data-i18n="services_sub">From raw data to the report your team uses to decide.</p>
     </div>
     <div class="services-grid">
       <div class="service-card">
         <div class="icon"><i class="fas fa-chart-bar"></i></div>
         <h3 data-i18n="svc_bi_title">BI Dashboards</h3>
-        <p data-i18n="svc_bi_desc">Interactive Power BI dashboards with automated data refresh, connecting multiple sources into a single source of truth.</p>
+        <p data-i18n="svc_bi_desc">Interactive Power BI dashboards with clear KPIs, intuitive filters and a design your team will actually use.</p>
+      </div>
+      <div class="service-card">
+        <div class="icon"><i class="fas fa-file-invoice-dollar"></i></div>
+        <h3 data-i18n="svc_fin_title">Financial Reporting</h3>
+        <p data-i18n="svc_fin_desc">P&amp;L, budget vs. actual, margins and cash flow reports built by an accountant who understands the numbers.</p>
+      </div>
+      <div class="service-card">
+        <div class="icon"><i class="fas fa-project-diagram"></i></div>
+        <h3 data-i18n="svc_model_title">Data Modeling &amp; DAX</h3>
+        <p data-i18n="svc_model_desc">Clean star-schema models and reliable DAX measures: year-over-year, YTD, market share, targets and more.</p>
       </div>
       <div class="service-card">
         <div class="icon"><i class="fas fa-cogs"></i></div>
         <h3 data-i18n="svc_auto_title">Data Automation</h3>
-        <p data-i18n="svc_auto_desc">Python and SQL pipelines that extract, transform, and load data automatically — eliminating manual work and errors.</p>
-      </div>
-      <div class="service-card">
-        <div class="icon"><i class="fas fa-chart-line"></i></div>
-        <h3 data-i18n="svc_forecast_title">Forecasting</h3>
-        <p data-i18n="svc_forecast_desc">Predictive models for revenue, demand, and KPIs using statistical methods and machine learning.</p>
-      </div>
-      <div class="service-card">
-        <div class="icon"><i class="fas fa-database"></i></div>
-        <h3 data-i18n="svc_strategy_title">Data Strategy</h3>
-        <p data-i18n="svc_strategy_desc">End-to-end data architecture consulting: from warehouse design to reporting layer and team enablement.</p>
+        <p data-i18n="svc_auto_desc">SQL and Power Query pipelines that refresh your reports automatically — no more manual Excel work.</p>
       </div>
     </div>
   </section>
@@ -283,6 +403,7 @@
           <li><i class="fas fa-envelope"></i> <a href="mailto:22santistirling@gmail.com">22santistirling@gmail.com</a></li>
           <li><i class="fab fa-linkedin"></i> <a href="https://www.linkedin.com/in/santiago-stirling-878bb5154/" target="_blank" rel="noopener noreferrer">linkedin.com/in/santiagostirling</a></li>
           <li><i class="fab fa-github"></i> <a href="https://github.com/santiagostirling" target="_blank" rel="noopener noreferrer">github.com/santiagostirling</a></li>
+          <li><i class="fas fa-briefcase"></i> <a href="https://www.upwork.com/freelancers/~01c5cb8e84d23b7fdf" target="_blank" rel="noopener noreferrer" data-i18n="upwork_link">Hire me on Upwork</a></li>
         </ul>
       </div>
       <form id="contact-form" class="contact-form" novalidate>
@@ -300,34 +421,42 @@
   <!-- Footer -->
   <footer class="footer">
     <div class="footer-icons">
-      <a href="./assets/docs/Santiago_Stirling_CV.pdf" data-cv data-filename="Santiago_Stirling_CV.pdf" target="_blank" rel="noopener noreferrer"><i class="fas fa-file-pdf"></i></a>
-      <a href="https://www.linkedin.com/in/santiago-stirling-878bb5154/" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i></a>
-      <a href="https://github.com/santiagostirling" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i></a>
-      <a href="mailto:22santistirling@gmail.com"><i class="fas fa-envelope"></i></a>
+      <a href="./assets/docs/Santiago_Stirling_CV.pdf" data-cv data-filename="Santiago_Stirling_CV.pdf" target="_blank" rel="noopener noreferrer" aria-label="Download CV"><i class="fas fa-file-pdf"></i></a>
+      <a href="https://www.linkedin.com/in/santiago-stirling-878bb5154/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+      <a href="https://github.com/santiagostirling" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fab fa-github"></i></a>
+      <a href="https://www.upwork.com/freelancers/~01c5cb8e84d23b7fdf" target="_blank" rel="noopener noreferrer" aria-label="Upwork"><i class="fas fa-briefcase"></i></a>
+      <a href="mailto:22santistirling@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
     </div>
-    <p>&copy; 2025 Santiago Stirling</p>
+    <p>&copy; <span id="year">2026</span> Santiago Stirling</p>
   </footer>
 
   <script>
     // ===== i18n =====
     var translations = {
       en: {
-        nav_services:"Services",nav_skills:"Skills",nav_projects:"Projects",nav_contact:"Contact",
-        hero_subtitle:"I help companies turn data into decisions",
+        nav_dashboards:"Dashboards",btn_dash:"Explore my dashboards",
+        svc_fin_title:"Financial Reporting",svc_fin_desc:"P&amp;L, budget vs. actual, margins and cash flow reports built by an accountant who understands the numbers.",
+        svc_model_title:"Data Modeling &amp; DAX",svc_model_desc:"Clean star-schema models and reliable DAX measures: year-over-year, YTD, market share, targets and more.",
+        dash_label:"Portfolio",dash_title:"Interactive Dashboards",dash_sub:"Three Power BI reports from different industries, rebuilt for the web. Open any of them, filter and click around.",
+        live:"Live demo",btn_explore:"Explore live",dash_note:"Built with sample data · Original reports developed in Power BI Desktop",
+        dash1_ind:"Cold chain logistics",dash1_desc:"Monitors shipment operations and delivery performance for a cold-chain distributor.",
+        dash1_p1:"volume, API adoption, alert rate, closing time",dash1_p2:"kg ordered vs. delivered, fill rate, shrinkage",
+        dash2_ind:"Market research",dash2_desc:"Tracks market share for five coffee brands across segments and sales channels.",
+        dash2_p1:"market size, YoY change, monthly share by brand",dash2_p2:"share by segment and channel, change in pp",
+        dash3_ind:"Travel &amp; sales",dash3_desc:"Covers sales performance, profitability, targets and the commercial pipeline of a travel agency.",
+        dash3_p1:"sales, margin, target attainment by agent",dash3_p2:"quotes by stage, win rate, weighted pipeline",
+        nav_services:"Services",nav_skills:"Skills",nav_contact:"Contact",
+        hero_subtitle:"I build Power BI dashboards that turn scattered data into clear decisions — with the eye of an accountant who understands your numbers.",
+        hero_role:"Power BI Developer · Financial Data Analyst",upwork_link:"Hire me on Upwork",
+        cred1_t:"Accountant by training",cred1_d:"Bachelor of Accountancy (Universidad de la República) — I speak the language of CFOs and controllers.",
+        cred2_t:"MSc Business Analytics",cred2_d:"Universidad ORT Uruguay, plus a Master's degree in Artificial Intelligence (Universidad de Palermo).",
+        cred3_t:"Power BI certified",cred3_d:"Microsoft PL-300: Power BI Data Analyst. Building BI solutions for clients since 2022.",
         btn_hire:"Hire Me",download_cv:"Download CV",
         stat_years:"Years Experience",stat_projects:"Projects Delivered",stat_clients:"Happy Clients",
-        services_label:"What I Do",services_title:"Services",services_sub:"End-to-end data solutions, from raw data to strategic insights.",
-        svc_bi_title:"BI Dashboards",svc_bi_desc:"Interactive Power BI dashboards with automated data refresh, connecting multiple sources into a single source of truth.",
-        svc_auto_title:"Data Automation",svc_auto_desc:"Python and SQL pipelines that extract, transform, and load data automatically — eliminating manual work and errors.",
-        svc_forecast_title:"Forecasting",svc_forecast_desc:"Predictive models for revenue, demand, and KPIs using statistical methods and machine learning.",
-        svc_strategy_title:"Data Strategy",svc_strategy_desc:"End-to-end data architecture consulting: from warehouse design to reporting layer and team enablement.",
+        services_label:"What I Do",services_title:"Services",services_sub:"From raw data to the report your team uses to decide.",
+        svc_bi_title:"BI Dashboards",svc_bi_desc:"Interactive Power BI dashboards with clear KPIs, intuitive filters and a design your team will actually use.",
+        svc_auto_title:"Data Automation",svc_auto_desc:"SQL and Power Query pipelines that refresh your reports automatically — no more manual Excel work.",
         skills_label:"Tech Stack",skills_title:"Technical Skills",
-        projects_label:"Portfolio",projects_title:"Projects",projects_sub:"Real-world projects showcasing data analysis, automation, and visualization.",
-        proj1_title:"Sales Dashboard Analysis",proj1_desc:"Exploratory data analysis on retail sales data with visualizations and key business insights.",
-        proj2_title:"SQL Data Pipeline",proj2_desc:"End-to-end ETL pipeline with staging, transformation, and reporting layers for a retail data warehouse.",
-        proj3_title:"Revenue Forecasting",proj3_desc:"Time series forecasting model predicting monthly revenue with trend and seasonality decomposition.",
-        proj4_title:"Power BI CRM Dashboard",proj4_desc:"Weekly pipeline tracking integrating CRM Dynamics and SQL with automatic refresh via Power BI Service.",
-        view_github:"View on GitHub",view_live:"View Live Dashboard",
         contact_label:"Get in Touch",contact_title:"Let's Work Together",contact_text:"Have a data challenge or need help making sense of your numbers? Let's talk.",
         contact_info_title:"Contact Info",
         ph_name:"Name",ph_email:"Email",ph_message:"Tell me about your project...",btn_send:"Send Message",
@@ -337,22 +466,29 @@
         msg_cv_not_found:"CV not found (404).",msg_cv_cors:"Network or CORS error.",msg_cv_error:"Error downloading CV."
       },
       es: {
-        nav_services:"Servicios",nav_skills:"Skills",nav_projects:"Proyectos",nav_contact:"Contacto",
-        hero_subtitle:"Ayudo a empresas a convertir datos en decisiones",
+        nav_dashboards:"Dashboards",btn_dash:"Ver mis dashboards",
+        svc_fin_title:"Reportes Financieros",svc_fin_desc:"Estados de resultados, presupuesto vs. real, márgenes y flujo de caja, hechos por un contador que entiende los números.",
+        svc_model_title:"Modelado de Datos y DAX",svc_model_desc:"Modelos en estrella prolijos y medidas DAX confiables: interanual, acumulado del año, participación de mercado, objetivos y más.",
+        dash_label:"Portfolio",dash_title:"Dashboards Interactivos",dash_sub:"Tres reportes de Power BI de rubros distintos, llevados a la web. Abrí cualquiera, filtrá y hacé clic para explorar.",
+        live:"Demo en vivo",btn_explore:"Explorar en vivo",dash_note:"Hechos con datos de muestra · Reportes originales desarrollados en Power BI Desktop",
+        dash1_ind:"Logística en frío",dash1_desc:"Monitorea la operación de envíos y el desempeño de entregas de un distribuidor de cadena de frío.",
+        dash1_p1:"volumen, adopción de API, tasa de alertas, tiempo de cierre",dash1_p2:"kg pedidos vs. entregados, cumplimiento, merma",
+        dash2_ind:"Investigación de mercado",dash2_desc:"Sigue la participación de mercado de cinco marcas de café por segmento y canal de venta.",
+        dash2_p1:"tamaño de mercado, variación interanual, share mensual por marca",dash2_p2:"share por segmento y canal, cambio en pp",
+        dash3_ind:"Turismo y ventas",dash3_desc:"Cubre ventas, rentabilidad, objetivos y el pipeline comercial de una agencia de viajes.",
+        dash3_p1:"ventas, margen, cumplimiento de objetivo por asesor",dash3_p2:"cotizaciones por etapa, tasa de conversión, pipeline ponderado",
+        nav_services:"Servicios",nav_skills:"Skills",nav_contact:"Contacto",
+        hero_subtitle:"Construyo dashboards en Power BI que convierten datos dispersos en decisiones claras — con la mirada de un contador que entiende tus números.",
+        hero_role:"Power BI Developer · Análisis Financiero",upwork_link:"Contratame en Upwork",
+        cred1_t:"Contador de formación",cred1_d:"Contador Público (Universidad de la República) — hablo el idioma de gerentes financieros y controllers.",
+        cred2_t:"Máster en Business Analytics",cred2_d:"Universidad ORT Uruguay, y un Máster en Inteligencia Artificial (Universidad de Palermo).",
+        cred3_t:"Certificado en Power BI",cred3_d:"Microsoft PL-300: Power BI Data Analyst. Desarrollando soluciones de BI para clientes desde 2022.",
         btn_hire:"Contrátame",download_cv:"Descargar CV",
         stat_years:"Años de Experiencia",stat_projects:"Proyectos Entregados",stat_clients:"Clientes Satisfechos",
-        services_label:"Qué Hago",services_title:"Servicios",services_sub:"Soluciones de datos de principio a fin, desde datos crudos hasta insights estratégicos.",
-        svc_bi_title:"Dashboards BI",svc_bi_desc:"Dashboards interactivos en Power BI con actualización automática, conectando múltiples fuentes en una única fuente de verdad.",
-        svc_auto_title:"Automatización de Datos",svc_auto_desc:"Pipelines en Python y SQL que extraen, transforman y cargan datos automáticamente — eliminando trabajo manual y errores.",
-        svc_forecast_title:"Forecasting",svc_forecast_desc:"Modelos predictivos para ingresos, demanda y KPIs usando métodos estadísticos y machine learning.",
-        svc_strategy_title:"Estrategia de Datos",svc_strategy_desc:"Consultoría integral de arquitectura de datos: desde diseño de warehouse hasta capa de reportes y habilitación de equipos.",
+        services_label:"Qué Hago",services_title:"Servicios",services_sub:"Del dato crudo al reporte que se usa para decidir.",
+        svc_bi_title:"Dashboards BI",svc_bi_desc:"Dashboards interactivos en Power BI con KPIs claros, filtros intuitivos y un diseño que tu equipo realmente va a usar.",
+        svc_auto_title:"Automatización de Datos",svc_auto_desc:"Pipelines en SQL y Power Query que actualizan tus reportes automáticamente — sin más trabajo manual en Excel.",
         skills_label:"Tech Stack",skills_title:"Habilidades Técnicas",
-        projects_label:"Portfolio",projects_title:"Proyectos",projects_sub:"Proyectos reales mostrando análisis de datos, automatización y visualización.",
-        proj1_title:"Análisis de Ventas",proj1_desc:"Análisis exploratorio de datos de ventas retail con visualizaciones e insights de negocio.",
-        proj2_title:"Pipeline de Datos SQL",proj2_desc:"Pipeline ETL completo con capas de staging, transformación y reportes para un data warehouse retail.",
-        proj3_title:"Pronóstico de Ingresos",proj3_desc:"Modelo de series temporales para predecir ingresos mensuales con descomposición de tendencia y estacionalidad.",
-        proj4_title:"Dashboard CRM en Power BI",proj4_desc:"Seguimiento semanal del pipeline integrando CRM Dynamics y SQL con actualización automática en Power BI Service.",
-        view_github:"Ver en GitHub",view_live:"Ver Dashboard en Vivo",
         contact_label:"Contacto",contact_title:"Trabajemos Juntos",contact_text:"¿Tenés un desafío con datos o necesitás ayuda para entender tus números? Hablemos.",
         contact_info_title:"Información de Contacto",
         ph_name:"Nombre",ph_email:"Email",ph_message:"Contame sobre tu proyecto...",btn_send:"Enviar Mensaje",
@@ -391,6 +527,17 @@
 
     document.addEventListener('DOMContentLoaded', function() {
       applyLang();
+
+      // Menú móvil
+      var mb = document.getElementById('menu-btn'), mm = document.getElementById('mobile-menu');
+      if (mb && mm) {
+        mb.addEventListener('click', function() {
+          var open = mm.classList.toggle('open');
+          mb.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+        mm.querySelectorAll('a').forEach(function(a) { a.addEventListener('click', function() { mm.classList.remove('open'); mb.setAttribute('aria-expanded','false'); }); });
+      }
+      var yEl = document.getElementById('year'); if (yEl) yEl.textContent = new Date().getFullYear();
 
       // Fade-in on scroll
       var observer = new IntersectionObserver(function(entries) {

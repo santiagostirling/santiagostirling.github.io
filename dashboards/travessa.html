@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Travessa Travel · Interactive dashboard</title>
+<meta name="description" content="Interactive travel agency dashboard: sales, profitability, targets and pipeline.">
+<meta name="author" content="Santiago Stirling">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Travessa Travel · Interactive dashboard">
+<meta property="og:description" content="Travel agency dashboard: sales, margin, targets by agent and commercial pipeline.">
+<meta property="og:url" content="https://santiagostirling.github.io/dashboards/travessa.html">
+<meta property="og:image" content="https://santiagostirling.github.io/images/dashboards/travessa.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="assets/logo_travessa.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/dash.css">
+</head>
+<body>
+<div id="app"></div>
+<script src="assets/echarts.min.js"></script>
+<script src="assets/dash.js"></script>
+<script>
+var H = DashH;
+var T = { bg:'#F6F3FF', card:'#FFFFFF', hdr:'#7C3AED', accent:'#FBBF24', fg:'#1F1535', muted:'#6B6385', grid:'#EDE9FE',
+          alt:'#FAF7FF', th:'#FF5A5F', value:'#7C3AED', radius:'18px',
+          colors:['#7C3AED','#FF5A5F','#FBBF24','#06B6D4','#EC4899','#10B981'] };
+var STAGES = ['New','Proposal sent','Negotiation','Won','Lost'];
+var SC = { 'New':'#7C3AED', 'Proposal sent':'#FF5A5F', 'Negotiation':'#FBBF24', 'Won':'#06B6D4', 'Lost':'#EC4899' };
+var PRODS = ['All-inclusive','Flight + hotel','Cruise','Guided tour'];
+var sales = function (rs) { return H.sum(rs,'amt'); };
+var open_ = function (rs) { return rs.filter(function(r){return r.stage!=='Won'&&r.stage!=='Lost';}); };
+var winRate = function (rs) { var w=rs.filter(function(r){return r.stage==='Won';}).length, l=rs.filter(function(r){return r.stage==='Lost';}).length; return w+l? w/(w+l):null; };
+var YEAR = { field:'year', label:'Year', mode:'chips', single:true, required:true, default:2026 };
+var months = function (rows) { return Array.from(new Set(rows.map(function(r){return r.month;}))).sort(function(a,b){return a-b;}); };
+
+Dash({
+  brand:'Travessa Travel', logo:'assets/logo_travessa.png', data:'data/travessa.json', theme:T,
+  lastYear:2026, lastMonth:9, sharedSlicers:['year','branch'],
+  pages:[{
+    key:'sales', title:'Sales & Profitability', subtitle:'Travessa Travel · sales performance', fact:'sales',
+    slicers:[YEAR,
+      { field:'branch', label:'Branch', mode:'chips' },
+      { field:'region', label:'Destination region', mode:'select' },
+      { field:'product', label:'Product', mode:'select', values:PRODS }],
+    kpis:[
+      { label:'Sales (USD)', value:function(c){return sales(c.rows);}, format:function(v){return H.compact(v,'$');} },
+      { label:'Margin %', value:function(c){var s=sales(c.rows);return s? (s-H.sum(c.rows,'cost'))/s:null;}, format:function(v){return H.pct(v);} },
+      { label:'Change vs. prior year', value:function(c){var py=sales(c.prior());return py? (sales(c.rows)-py)/py:null;},
+        format:function(v){return H.delta(v);}, color:function(v){return v==null?null:v>=0?H.good:H.bad;} },
+      { label:'Target attainment', value:function(c){var tg=H.sum(c.table('targets'),'target');return tg? sales(c.rows)/tg:null;},
+        format:function(v){return H.pct(v);}, color:function(v){return v==null?null:v>=1?H.good:v>=0.85?H.warn:H.bad;} }
+    ],
+    visuals:[
+      { title:'Monthly sales vs. prior year', span:7, build:function(c,sel,t){
+          var ms=months(c.rows), cur=H.group(c.rows,'month','amt'), py=H.group(c.prior(),'month','amt');
+          return { legend:{data:['Selected year','Prior year']}, tooltip:{trigger:'axis',valueFormatter:H.usd},
+            xAxis:{type:'category',data:ms.map(function(m){return H.MONTHS[m-1];}),axisTick:{show:false},axisLine:{lineStyle:{color:t.grid}},axisLabel:{color:t.muted}},
+            yAxis:{type:'value',axisLabel:{color:t.muted,formatter:function(v){return H.compact(v,'$');}},splitLine:{lineStyle:{color:t.grid,type:'dashed'}}},
+            series:[{name:'Selected year',type:'bar',barMaxWidth:32,itemStyle:{color:t.colors[0],borderRadius:[6,6,0,0]},data:ms.map(function(m){return Math.round(cur.get(m)||0);})},
+                    {name:'Prior year',type:'line',smooth:true,symbol:'circle',symbolSize:6,itemStyle:{color:t.colors[1]},lineStyle:{width:2.5,color:t.colors[1]},
+                     data:ms.map(function(m){return py.has(m)?Math.round(py.get(m)):null;})}]};
+        }},
+      { title:'Sales vs. target by agent', span:5, click:'agent', build:function(c,sel,t){
+          var s=H.group(c.rows,'agent','amt'), tg=H.group(c.table('targets'),'agent','target');
+          var ag=H.sortedEntries(s).map(function(x){return x[0];});
+          return { legend:{data:['Sales','Target']}, tooltip:{trigger:'axis',valueFormatter:H.usd},
+            grid:{left:8,right:20,top:30,bottom:4,containLabel:true},
+            yAxis:{type:'category',data:ag,inverse:true,axisTick:{show:false},axisLine:{lineStyle:{color:t.grid}},axisLabel:{color:t.muted}},
+            xAxis:{type:'value',axisLabel:{color:t.muted,formatter:function(v){return H.compact(v,'$');}},splitLine:{lineStyle:{color:t.grid,type:'dashed'}}},
+            series:[{name:'Sales',type:'bar',barGap:'10%',itemStyle:{borderRadius:[0,4,4,0]},
+                     data:ag.map(function(a){return {value:Math.round(s.get(a)||0),itemStyle:{color:sel==null||sel===a?t.colors[0]:t.colors[0]+'40'}};})},
+                    {name:'Target',type:'bar',itemStyle:{borderRadius:[0,4,4,0]},
+                     data:ag.map(function(a){return {value:Math.round(tg.get(a)||0),itemStyle:{color:sel==null||sel===a?t.colors[1]:t.colors[1]+'40'}};})}]};
+        }},
+      { title:'Profitability by region and destination', span:7, type:'table', click:'region', build:function(c,sel){
+          var g=H.groupRows(c.rows,'region'), rows=[];
+          H.sortedEntries(H.group(c.rows,'region','amt')).forEach(function(e){
+            var rs=g.get(e[0]), s=sales(rs);
+            rows.push({key:e[0], cls:'grp', cells:[e[0],H.usd(s),H.pct((s-H.sum(rs,'cost'))/s),H.n0(H.sum(rs,'pax')),H.usd(s/rs.length)]});
+            H.sortedEntries(H.group(rs,'dest','amt')).forEach(function(d){
+              var rd=rs.filter(function(r){return r.dest===d[0];}), sd=sales(rd);
+              rows.push({cells:['&nbsp;&nbsp;&nbsp;'+d[0],H.usd(sd),H.pct((sd-H.sum(rd,'cost'))/sd),H.n0(H.sum(rd,'pax')),H.usd(sd/rd.length)]});
+            });
+          });
+          var s=sales(c.rows);
+          rows.push({cls:'tot', cells:['Total',H.usd(s),H.pct(s?(s-H.sum(c.rows,'cost'))/s:null),H.n0(H.sum(c.rows,'pax')),H.usd(c.rows.length?s/c.rows.length:null)]});
+          return H.table(['Region / destination','Sales','Margin %','Travelers','Avg. ticket'], rows, {sel:sel});
+        }},
+      { title:'Sales by product', span:5, click:'product', build:function(c,sel,t){
+          var g=H.group(c.rows,'product','amt');
+          return H.donut(t, PRODS.filter(function(p){return g.has(p);}).map(function(p){return [p,g.get(p)];}),
+            {sel:sel, fmt:H.usd, colorBy:function(k){return t.colors[PRODS.indexOf(k)];}});
+        }}
+    ]
+  },{
+    key:'pipeline', title:'Sales Pipeline', subtitle:'Travessa Travel · quotes and conversion', fact:'quotes',
+    slicers:[YEAR,
+      { field:'branch', label:'Branch', mode:'chips' },
+      { field:'agent', label:'Agent', mode:'select' },
+      { field:'region', label:'Destination region', mode:'select' }],
+    kpis:[
+      { label:'Quotes', value:function(c){return c.rows.length;}, format:H.n0 },
+      { label:'Win rate', value:function(c){return winRate(c.rows);}, format:function(v){return H.pct(v);} },
+      { label:'Open pipeline (USD)', value:function(c){return H.sum(open_(c.rows),'amt');}, format:function(v){return H.compact(v,'$');} },
+      { label:'Weighted pipeline (USD)', value:function(c){return H.sum(open_(c.rows),function(r){return r.amt*r.prob/100;});}, format:function(v){return H.compact(v,'$');} }
+    ],
+    visuals:[
+      { title:'Quotes by stage', span:5, click:'stage', build:function(c,sel,t){
+          var g=H.group(c.rows,'stage'), st=STAGES.filter(function(s){return g.has(s);});
+          return H.bar(t, st, st.map(function(s){return g.get(s);}), {sel:sel, colorBy:function(k){return SC[k];}});
+        }},
+      { title:'Win rate by agent', span:7, click:'agent', build:function(c,sel,t){
+          var g=H.groupRows(c.rows,'agent');
+          var e=Array.from(g.entries()).map(function(x){return [x[0],winRate(x[1])];}).filter(function(x){return x[1]!=null;}).sort(function(a,b){return b[1]-a[1];});
+          return H.bar(t, e.map(function(x){return x[0];}), e.map(function(x){return x[1];}), {sel:sel, pct:true, fmt:function(v){return H.pct(v);}});
+        }},
+      { title:'Quotes by month and stage', span:6, click:'stage', clickSeries:true, build:function(c,sel,t){
+          var ms=months(c.rows);
+          return { legend:{data:STAGES}, tooltip:{trigger:'axis'},
+            xAxis:{type:'category',data:ms.map(function(m){return H.MONTHS[m-1];}),axisTick:{show:false},axisLine:{lineStyle:{color:t.grid}},axisLabel:{color:t.muted}},
+            yAxis:{type:'value',axisLabel:{color:t.muted},splitLine:{lineStyle:{color:t.grid,type:'dashed'}}},
+            series:STAGES.map(function(s){return {name:s,type:'bar',stack:'q',barMaxWidth:32,itemStyle:{color:sel==null||sel===s?SC[s]:SC[s]+'40'},
+              data:ms.map(function(m){return c.rows.filter(function(r){return r.month===m&&r.stage===s;}).length;})};})};
+        }},
+      { title:'Largest open opportunities', span:6, type:'table', build:function(c){
+          var o=open_(c.rows).sort(function(a,b){return b.amt-a.amt;});
+          var rows=o.slice(0,40).map(function(r){return {cells:[r.quote,r.dest,r.agent,'<span style="color:'+SC[r.stage]+'">●</span> '+r.stage,H.usd(r.amt),r.prob+'%']};});
+          rows.push({cls:'tot', cells:['Total ('+o.length+')','','','',H.usd(H.sum(o,'amt')),'']});
+          return H.table(['Quote','Destination','Agent','Stage','Amount','Prob.'], rows);
+        }}
+    ]
+  }]
+});
+</script>
+</body>
+</html>
